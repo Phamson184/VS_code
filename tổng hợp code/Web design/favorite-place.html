@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Favorite Place – Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --accent: #f0a500;
+    --accent2: #e05c2a;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --slide-w: 900px;
+    --slide-h: 506px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 32px 16px 48px;
+    gap: 24px;
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    width: 100%;
+    max-width: var(--slide-w);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topbar h1 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+  .counter { font-size: .85rem; color: var(--muted); }
+
+  /* ── Stage ── */
+  .stage {
+    width: 100%;
+    max-width: var(--slide-w);
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
+    cursor: pointer;
+  }
+
+  /* ── Slides ── */
+  .slide {
+    position: absolute; inset: 0;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .5s ease, transform .5s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* shared slide parts */
+  .tag {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .slide h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+  .slide p, .slide li {
+    font-size: clamp(.85rem, 1.6vw, 1rem);
+    line-height: 1.75;
+    color: #c9d1d9;
+  }
+  .slide ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .slide ul li::before { content: '→ '; color: var(--accent); font-weight: 700; }
+  .highlight { color: var(--accent); font-weight: 700; }
+  .highlight2 { color: var(--accent2); font-weight: 700; }
+
+  /* ── SLIDE 1 – cover ── */
+  #s1 { background: linear-gradient(135deg, #0d1117 0%, #1a1f2e 100%); }
+  #s1::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 340px; height: 340px;
+    background: radial-gradient(circle, rgba(240,165,0,.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  #s1 .name-badge {
+    display: inline-block;
+    background: rgba(240,165,0,.12);
+    border: 1px solid rgba(240,165,0,.3);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: .8rem;
+    color: var(--accent);
+    margin-bottom: 20px;
+    letter-spacing: .06em;
+  }
+  #s1 h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
+  #s1 .sub { font-size: .95rem; color: var(--muted); margin-top: 10px; }
+  #s1 .city-tag {
+    margin-top: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  #s1 .city-tag span { font-size: .8rem; color: var(--muted); }
+  #s1 .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* ── SLIDE 2 – what & where ── */
+  #s2 { background: #161b22; }
+  .card-row { display: flex; gap: 16px; margin-top: 8px; }
+  .info-card {
+    flex: 1;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .info-card .ic { font-size: 1.6rem; margin-bottom: 10px; }
+  .info-card .label { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+  .info-card .val { font-size: .95rem; font-weight: 500; color: var(--text); }
+
+  /* ── SLIDE 3 – activities ── */
+  #s3 { background: linear-gradient(160deg, #161b22 60%, #1c1506 100%); }
+  .act-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+  .act-item {
+    background: rgba(240,165,0,.07);
+    border: 1px solid rgba(240,165,0,.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: .9rem;
+    color: #d0c09a;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .act-item .icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  /* ── SLIDE 4 – why i love it ── */
+  #s4 { background: #0d1117; overflow: hidden; }
+  #s4 .glow {
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(224,92,42,.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .reason-list { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
+  .reason-item { display: flex; align-items: flex-start; gap: 14px; }
+  .reason-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: rgba(240,165,0,.25);
+    line-height: 1;
+    width: 32px; flex-shrink: 0;
+  }
+  .reason-text { font-size: .93rem; color: #c9d1d9; line-height: 1.6; padding-top: 4px; }
+
+  /* ── SLIDE 5 – closing ── */
+  #s5 { background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); text-align: center; align-items: center; }
+  #s5::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(240,165,0,.08) 0%, transparent 65%);
+    border-radius: 50%;
+  }
+  #s5 .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.4;
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+  #s5 .thanks {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    font-size: .9rem;
+    letter-spacing: .08em;
+    padding: 10px 28px;
+    border-radius: 100px;
+  }
+
+  /* ── Script panel ── */
+  .script-panel {
+    width: 100%;
+    max-width: var(--slide-w);
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 12px;
+    padding: 24px 28px;
+    transition: all .4s ease;
+  }
+  .script-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .script-header h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
+  .script-header span { font-size: .78rem; color: var(--muted); }
+  .script-text { font-size: .93rem; line-height: 1.85; color: #c9d1d9; }
+  .script-text em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  /* ── Nav ── */
+  .nav {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .nav button {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    color: var(--text);
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .nav button:hover { background: rgba(240,165,0,.15); border-color: var(--accent); color: var(--accent); }
+  .nav button:disabled { opacity: .3; cursor: not-allowed; }
+  .nav .dots { display: flex; gap: 6px; }
+  .nav .dot-btn {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,.2);
+    cursor: pointer; padding: 0;
+    transition: all .2s;
+  }
+  .nav .dot-btn.on { background: var(--accent); width: 22px; border-radius: 4px; }
+
+  /* keyboard hint */
+  .hint { font-size: .75rem; color: rgba(255,255,255,.2); margin-top: -8px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>✦ Presentation 01</h1>
+  <span class="counter" id="ctr">1 / 5</span>
+</div>
+
+<!-- ═══════════ STAGE ═══════════ -->
+<div class="stage" id="stage" onclick="next()">
+
+  <!-- SLIDE 1 -->
+  <div class="slide active" id="s1">
+    <div class="name-badge">Presented by: [Tên của bạn]</div>
+    <h2>My Favorite<br/><span class="highlight">Place to Go</span></h2>
+    <p class="sub">A short presentation about a special spot<br/>that keeps me motivated every day.</p>
+    <div class="city-tag">
+      <div class="dot"></div>
+      <span>Ho Chi Minh City · University</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide" id="s2">
+    <div class="tag">What & Where</div>
+    <h2>The <span class="highlight">5th Floor</span> of Building A</h2>
+    <div class="card-row">
+      <div class="info-card">
+        <div class="ic">📍</div>
+        <div class="label">Location</div>
+        <div class="val">Building A, 5th Floor<br/>School Library – HCMC</div>
+      </div>
+      <div class="info-card">
+        <div class="ic">🕐</div>
+        <div class="label">When</div>
+        <div class="val">After classes,<br/>especially in the evening</div>
+      </div>
+      <div class="info-card">
+        <div class="ic">🧍</div>
+        <div class="label">Who with</div>
+        <div class="val">Usually alone –<br/>easier to focus</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" id="s3">
+    <div class="tag">What I do there</div>
+    <h2>My <span class="highlight">Activities</span></h2>
+    <div class="act-grid">
+      <div class="act-item"><span class="icon">📚</span> Study major subjects & review lessons</div>
+      <div class="act-item"><span class="icon">▶️</span> Watch educational videos to learn new things</div>
+      <div class="act-item"><span class="icon">🚶</span> Take short walks to clear my mind</div>
+      <div class="act-item"><span class="icon">🌃</span> Enjoy the night view from the window</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" id="s4">
+    <div class="glow"></div>
+    <div class="tag">Why I love it</div>
+    <h2>What Makes It <span class="highlight2">Special</span></h2>
+    <div class="reason-list">
+      <div class="reason-item">
+        <div class="reason-num">01</div>
+        <div class="reason-text">It is <strong>calm and well-lit</strong> — perfect for deep focus and long study sessions.</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">02</div>
+        <div class="reason-text">At night, I can see <strong>Landmark 81</strong> glowing with colorful lights against the city skyline.</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">03</div>
+        <div class="reason-text">That view is my <strong>reminder to keep working hard</strong> toward my goals every single day.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide" id="s5">
+    <p class="big-quote">"A quiet place with an amazing view — that's all I need to stay <span class="highlight">motivated</span>."</p>
+    <p style="color:var(--muted);font-size:.88rem;margin-bottom:24px;">That is all I want to share about my favorite place.</p>
+    <span class="thanks">Thank you for listening! 🙏</span>
+  </div>
+
+</div><!-- /stage -->
+
+<!-- ═══════════ NAV ═══════════ -->
+<div class="nav">
+  <button id="btnPrev" onclick="go(cur-1)" disabled>← Prev</button>
+  <div class="dots" id="dots"></div>
+  <button id="btnNext" onclick="go(cur+1)">Next →</button>
+</div>
+<p class="hint">Click slide or use ← → arrow keys to navigate</p>
+
+<!-- ═══════════ SCRIPT PANEL ═══════════ -->
+<div class="script-panel">
+  <div class="script-header">
+    <h3>🎤 Speaking Script</h3>
+    <span id="scriptSlide">Slide 1 of 5</span>
+  </div>
+  <p class="script-text" id="scriptText"></p>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const scripts = [
+  `<em>Hello everyone!</em> My name is <em>[Tên của bạn]</em>. Today, I would like to talk about my favorite place to go.`,
+  `My favorite place is the <em>5th floor of Building A</em>, where the school library is located, right here at my university in Ho Chi Minh City. I usually go there after my classes, especially in the evening when it is quieter and easier to concentrate. I often go there <em>alone</em> because I find it easier to focus when I study by myself.`,
+  `At this place, I spend most of my time <em>studying for my major</em>, reviewing lessons, and watching educational videos to explore new knowledge. Whenever I feel tired or stressed, I take a short walk around the floor to <em>clear my mind</em> before getting back to work.`,
+  `What I love most about this place is how <em>calm and well-lit</em> it is — it really helps me stay focused. But the best part is definitely the view from the window. At night, I can clearly see <em>Landmark 81</em> glowing with colorful lights against the city skyline. Every time I look at it, I feel a sense of motivation — like a reminder to <em>keep working hard toward my goals</em>.`,
+  `That is all I want to share about my favorite place. <em>Thank you for listening!</em>`
+];
+let cur = 0;
+
+function buildDots() {
+  const c = document.getElementById('dots');
+  c.innerHTML = '';
+  slides.forEach((_,i) => {
+    const b = document.createElement('button');
+    b.className = 'dot-btn' + (i===cur?' on':'');
+    b.onclick = () => go(i);
+    c.appendChild(b);
+  });
+}
+
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = `${cur+1} / ${slides.length}`;
+  document.getElementById('scriptSlide').textContent = `Slide ${cur+1} of ${slides.length}`;
+  document.getElementById('scriptText').innerHTML = scripts[cur];
+  document.getElementById('btnPrev').disabled = cur === 0;
+  document.getElementById('btnNext').disabled = cur === slides.length - 1;
+  buildDots();
+}
+
+function next() { go(cur+1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(cur+1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(cur-1);
+});
+
+go(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Favourite Place — All Students</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0c0c0e;
+    --surface: #141418;
+    --surface2: #1a1c18;
+    --border: rgba(255,255,255,.07);
+    --text: #f0ede8;
+    --muted: #5a5a6a;
+    --accent: #c8f542;
+    --accent2: #4a7a12;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'Cabinet Grotesk', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 48px 24px 64px;
+    display: flex; flex-direction: column; align-items: center; gap: 48px;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; width: 100%; max-width: 920px; display: flex; flex-direction: column; gap: 48px; }
+
+  /* ── Back button — prominent ── */
+  .back {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: #0c0c0e;
+    background: var(--accent);
+    text-decoration: none;
+    padding: 10px 20px 10px 16px;
+    border-radius: 100px;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    align-self: flex-start;
+    box-shadow: 0 4px 16px rgba(200,245,66,.25);
+  }
+  .back:hover {
+    background: #d8ff55;
+    transform: translateX(-3px);
+    box-shadow: 0 6px 22px rgba(200,245,66,.38);
+  }
+  .back-arrow { font-size: 1rem; }
+
+  .hd { display: flex; flex-direction: column; gap: 6px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
+  .hd-eyebrow { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+  .hd-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+  .hd h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 7vw, 5rem); letter-spacing: .03em; line-height: .92; }
+  .hd h1 em { font-style: normal; -webkit-text-stroke: 1.5px var(--text); color: transparent; }
+  .hd-meta { margin-top: 10px; }
+  .hd-count { font-size: .8rem; color: var(--muted); }
+  .hd-count strong { color: var(--accent); font-weight: 700; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+
+  /* ── Card ── */
+  .student-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px 24px;
+    text-decoration: none; color: var(--text);
+    overflow: hidden;
+    display: flex; flex-direction: column; gap: 20px;
+    cursor: pointer;
+    transition: transform .28s cubic-bezier(.23,1,.32,1), border-color .28s, background .28s;
+    animation: fadeUp .5s ease both;
+  }
+  .student-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(200,245,66,.3);
+    background: var(--surface2);
+  }
+
+  .card-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
+    background-size: 200% 100%;
+    opacity: 0; transition: opacity .3s;
+    animation: barMove 3s linear infinite;
+  }
+  .student-card:hover .card-bar { opacity: 1; }
+  @keyframes barMove { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .avatar {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
+    flex-shrink: 0; color: #0c0c0e; font-weight: 900;
+    box-shadow: 0 4px 14px rgba(200,245,66,.2);
+  }
+  .card-num-sm { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; opacity: .07; }
+
+  .card-body { flex: 1; }
+  .student-name { font-weight: 800; font-size: 1.05rem; margin-bottom: 4px; }
+  .place-name {
+    font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 8px;
+  }
+  .card-desc { font-size: .83rem; color: var(--muted); line-height: 1.65; }
+
+  .card-footer { display: flex; justify-content: space-between; align-items: center; }
+  .view-btn {
+    font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 6px;
+    transition: gap .2s;
+  }
+  .student-card:hover .view-btn { gap: 10px; }
+  .tag-chip {
+    font-size: .68rem; padding: 4px 10px; border-radius: 100px;
+    background: rgba(200,245,66,.07); border: 1px solid rgba(200,245,66,.18);
+    color: #8aaa2a;
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Expand overlay ── */
+  .expand-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0);
+    pointer-events: none;
+    transition: background .4s ease;
+  }
+  .expand-overlay.active {
+    background: rgba(0,0,0,.7);
+    pointer-events: auto;
+  }
+
+  .expand-frame-wrap {
+    position: fixed; z-index: 1001;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all .5s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 40px 120px rgba(0,0,0,.8);
+    pointer-events: none;
+  }
+  .expand-frame-wrap.animating { pointer-events: none; }
+  .expand-frame-wrap.open {
+    pointer-events: auto;
+    border-radius: 0;
+  }
+
+  .expand-frame {
+    width: 100%; height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .expand-close {
+    position: fixed; z-index: 1002;
+    top: 18px; right: 18px;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.18);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease, background .2s;
+    line-height: 1;
+  }
+  .expand-close.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .expand-close:hover { background: rgba(255,255,255,.22); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="index.html">
+    <span class="back-arrow">←</span> Back to all topics
+  </a>
+
+  <div class="hd">
+    <p class="hd-eyebrow">Topic 01</p>
+    <h1>Favourite<br/><em>Place</em></h1>
+    <div class="hd-meta">
+      <p class="hd-count"><strong>1</strong> presentation</p>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="student-card" data-href="favorite-place.html" style="animation-delay:.05s">
+      <div class="card-bar"></div>
+      <div class="card-header">
+        <div class="avatar">P</div>
+        <div class="card-num-sm">01</div>
+      </div>
+      <div class="card-body">
+        <div class="place-name">🏫 Building A – 5th Floor</div>
+        <div class="student-name">Phạm Sơn</div>
+        <p class="card-desc">A quiet rooftop-style spot with a stunning view of Landmark 81 — perfect for studying or unwinding.</p>
+      </div>
+      <div class="card-footer">
+        <span class="view-btn">View slides →</span>
+        <span class="tag-chip">6 slides</span>
+      </div>
+    </div>
+
+    <!-- thêm student card ở đây -->
+
+  </div>
+
+</div>
+
+<!-- Expand overlay + iframe -->
+<div class="expand-overlay" id="overlay"></div>
+<div class="expand-frame-wrap" id="frameWrap">
+  <iframe class="expand-frame" id="expandFrame" src="" title="Presentation"></iframe>
+</div>
+<button class="expand-close" id="closeBtn" aria-label="Close">✕</button>
+
+<script>
+  const overlay = document.getElementById('overlay');
+  const frameWrap = document.getElementById('frameWrap');
+  const expandFrame = document.getElementById('expandFrame');
+  const closeBtn = document.getElementById('closeBtn');
+
+  let originRect = null;
+
+  function openCard(card) {
+    const href = card.dataset.href;
+    if (!href) return;
+
+    const rect = card.getBoundingClientRect();
+    originRect = rect;
+
+    // Set iframe src
+    expandFrame.src = href;
+
+    // Position frame at card location
+    frameWrap.style.transition = 'none';
+    frameWrap.style.left = rect.left + 'px';
+    frameWrap.style.top = rect.top + 'px';
+    frameWrap.style.width = rect.width + 'px';
+    frameWrap.style.height = rect.height + 'px';
+    frameWrap.style.borderRadius = '16px';
+    frameWrap.style.opacity = '0';
+
+    // Force reflow
+    frameWrap.offsetHeight;
+
+    // Animate to fullscreen
+    frameWrap.style.transition = 'all .5s cubic-bezier(.4,0,.2,1)';
+    frameWrap.style.opacity = '1';
+
+    requestAnimationFrame(() => {
+      frameWrap.style.left = '0';
+      frameWrap.style.top = '0';
+      frameWrap.style.width = '100vw';
+      frameWrap.style.height = '100vh';
+      frameWrap.style.borderRadius = '0';
+      frameWrap.classList.add('open');
+
+      overlay.classList.add('active');
+      closeBtn.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  function closeCard() {
+    if (!originRect) return;
+
+    frameWrap.style.transition = 'all .45s cubic-bezier(.4,0,.2,1)';
+    frameWrap.style.left = originRect.left + 'px';
+    frameWrap.style.top = originRect.top + 'px';
+    frameWrap.style.width = originRect.width + 'px';
+    frameWrap.style.height = originRect.height + 'px';
+    frameWrap.style.borderRadius = '16px';
+    frameWrap.style.opacity = '0';
+
+    overlay.classList.remove('active');
+    closeBtn.classList.remove('visible');
+
+    setTimeout(() => {
+      frameWrap.classList.remove('open');
+      expandFrame.src = '';
+      document.body.style.overflow = '';
+      originRect = null;
+    }, 450);
+  }
+
+  document.querySelectorAll('.student-card').forEach(card => {
+    card.addEventListener('click', () => openCard(card));
+  });
+
+  closeBtn.addEventListener('click', closeCard);
+  overlay.addEventListener('click', closeCard);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCard();
+  });
+</script>
+</body>
+</html>

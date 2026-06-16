@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Favorite App – YouTube Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card: #111111;
+    --red: #ff0000;
+    --red2: #cc0000;
+    --red-glow: rgba(255,0,0,.18);
+    --text: #f1f1f1;
+    --muted: #888;
+    --slide-w: 900px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 32px 16px 48px;
+    gap: 24px;
+  }
+
+  .topbar {
+    width: 100%; max-width: var(--slide-w);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar h1 { font-family: 'Syne', sans-serif; font-size: .95rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+  .counter { font-size: .85rem; color: var(--muted); }
+
+  /* stage */
+  .stage {
+    width: 100%; max-width: var(--slide-w);
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 28px 80px rgba(0,0,0,.8);
+    cursor: pointer;
+    background: var(--bg);
+  }
+
+  /* slide base */
+  .slide {
+    position: absolute; inset: 0;
+    padding: 48px 56px;
+    display: flex; flex-direction: column; justify-content: center;
+    opacity: 0;
+    transform: scale(.97) translateY(20px);
+    transition: opacity .45s ease, transform .45s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+
+  .tag {
+    font-size: .68rem; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 12px;
+  }
+  .slide h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+    font-weight: 800; line-height: 1.15; margin-bottom: 18px;
+  }
+  .slide p, .slide li {
+    font-size: clamp(.83rem, 1.55vw, .97rem);
+    line-height: 1.8; color: #b0b0b0;
+  }
+  .hl { color: var(--red); font-weight: 700; }
+
+  /* ── SLIDE 1 – cover ── */
+  #s1 { background: #0a0a0a; }
+  #s1 .bg-ring {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,0,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .yt-logo {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+  }
+  .yt-icon {
+    width: 54px; height: 38px;
+    background: var(--red);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .yt-icon::after {
+    content: '';
+    border-left: 16px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 4px;
+  }
+  .yt-logo-text { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -.02em; }
+  #s1 h2 { font-size: clamp(2rem, 4.5vw, 3rem); }
+  #s1 .sub { font-size: .9rem; color: var(--muted); margin-top: 8px; }
+  .badge {
+    margin-top: 28px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,0,0,.1);
+    border: 1px solid rgba(255,0,0,.25);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: .78rem; color: #ff6b6b;
+  }
+
+  /* ── SLIDE 2 – what kind ── */
+  #s2 { background: #0d0d0d; }
+  .kind-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 10px; }
+  .kind-chip {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px; padding: 18px 14px;
+    text-align: center;
+  }
+  .kind-chip .ki { font-size: 1.8rem; margin-bottom: 8px; }
+  .kind-chip .kl { font-size: .82rem; color: #888; }
+
+  /* ── SLIDE 3 – features ── */
+  #s3 { background: linear-gradient(150deg, #0d0d0d 55%, #1a0000 100%); }
+  .feat-list { margin-top: 10px; display: flex; flex-direction: column; gap: 14px; }
+  .feat-item { display: flex; align-items: flex-start; gap: 14px; }
+  .feat-bar {
+    width: 3px; background: var(--red); border-radius: 2px;
+    flex-shrink: 0; align-self: stretch;
+  }
+  .feat-body { font-size: .92rem; color: #b0b0b0; line-height: 1.65; }
+  .feat-body strong { color: var(--text); font-weight: 500; }
+
+  /* ── SLIDE 4 – usage ── */
+  #s4 { background: #0a0a0a; }
+  .usage-big {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1;
+    margin: 8px 0 6px;
+  }
+  .usage-sub { font-size: .9rem; color: var(--muted); margin-bottom: 20px; }
+  .when-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .when-chip {
+    background: rgba(255,0,0,.08);
+    border: 1px solid rgba(255,0,0,.2);
+    border-radius: 100px; padding: 7px 16px;
+    font-size: .8rem; color: #ff8080;
+  }
+
+  /* ── SLIDE 5 – like/dislike ── */
+  #s5 { background: #0d0d0d; }
+  .ld-row { display: flex; gap: 20px; margin-top: 10px; }
+  .ld-col { flex: 1; }
+  .ld-col .ld-head {
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 12px;
+  }
+  .like .ld-head { color: #4ade80; }
+  .dislike .ld-head { color: var(--red); }
+  .ld-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px; border-radius: 10px; margin-bottom: 8px;
+    font-size: .88rem; color: #b0b0b0; line-height: 1.6;
+  }
+  .like .ld-item { background: rgba(74,222,128,.06); border: 1px solid rgba(74,222,128,.12); }
+  .dislike .ld-item { background: rgba(255,0,0,.05); border: 1px solid rgba(255,0,0,.12); }
+  .ld-item span { flex-shrink: 0; }
+
+  /* ── SLIDE 6 – closing ── */
+  #s6 { background: #0a0a0a; text-align: center; align-items: center; }
+  #s6 .ring {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,0,.1) 0%, transparent 65%);
+  }
+  #s6 h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 16px; }
+  #s6 .thanks-btn {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: .9rem;
+    letter-spacing: .05em;
+    padding: 12px 32px; border-radius: 100px;
+    margin-top: 8px;
+  }
+
+  /* nav */
+  .nav { display: flex; gap: 12px; align-items: center; }
+  .nav button {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    color: var(--text); border-radius: 50px;
+    padding: 10px 28px;
+    font-family: 'Inter', sans-serif; font-size: .85rem;
+    cursor: pointer; transition: all .2s;
+  }
+  .nav button:hover { background: rgba(255,0,0,.15); border-color: var(--red); color: var(--red); }
+  .nav button:disabled { opacity: .25; cursor: not-allowed; }
+  .dots { display: flex; gap: 6px; }
+  .dot-btn {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: none; background: rgba(255,255,255,.15);
+    cursor: pointer; padding: 0; transition: all .2s;
+  }
+  .dot-btn.on { background: var(--red); width: 22px; border-radius: 4px; }
+
+  /* script */
+  .script-panel {
+    width: 100%; max-width: var(--slide-w);
+    background: #111; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 24px 28px;
+  }
+  .script-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .script-header h3 { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--red); }
+  .script-header span { font-size: .78rem; color: var(--muted); }
+  .script-text { font-size: .93rem; line-height: 1.85; color: #b0b0b0; }
+  .script-text em { color: #ff8080; font-style: normal; font-weight: 500; }
+
+  .hint { font-size: .75rem; color: rgba(255,255,255,.18); margin-top: -8px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>▶ Presentation 02</h1>
+  <span class="counter" id="ctr">1 / 6</span>
+</div>
+
+<div class="stage" id="stage" onclick="next()">
+
+  <!-- SLIDE 1 – cover -->
+  <div class="slide active" id="s1">
+    <div class="bg-ring"></div>
+    <div class="yt-logo">
+      <div class="yt-icon"></div>
+      <span class="yt-logo-text">YouTube</span>
+    </div>
+    <h2>My Favorite<br/><span class="hl">App</span></h2>
+    <p class="sub">A short presentation about the app I use every single day.</p>
+    <div class="badge">📱 Presented by: [Tên của bạn]</div>
+  </div>
+
+  <!-- SLIDE 2 – what kind -->
+  <div class="slide" id="s2">
+    <div class="tag">What kind of app?</div>
+    <h2>A <span class="hl">Video-Sharing</span> Platform</h2>
+    <div class="kind-grid">
+      <div class="kind-chip"><div class="ki">🎵</div><div class="kl">Music Videos</div></div>
+      <div class="kind-chip"><div class="ki">🎬</div><div class="kl">Movies & Docs</div></div>
+      <div class="kind-chip"><div class="ki">📚</div><div class="kl">Tutorials</div></div>
+      <div class="kind-chip"><div class="ki">🔴</div><div class="kl">Live Streams</div></div>
+      <div class="kind-chip"><div class="ki">😂</div><div class="kl">Entertainment</div></div>
+      <div class="kind-chip"><div class="ki">🌍</div><div class="kl">News & Culture</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 – features -->
+  <div class="slide" id="s3">
+    <div class="tag">What can the app do?</div>
+    <h2>Key <span class="hl">Features</span></h2>
+    <div class="feat-list">
+      <div class="feat-item"><div class="feat-bar"></div><div class="feat-body"><strong>Watch anything</strong> — music, movies, documentaries, tutorials, and live streams on any topic.</div></div>
+      <div class="feat-item"><div class="feat-bar"></div><div class="feat-body"><strong>Create & upload</strong> — anyone can start a channel and share their own videos with the world.</div></div>
+      <div class="feat-item"><div class="feat-bar"></div><div class="feat-body"><strong>Personalized feed</strong> — YouTube recommends videos based on what you watch, so it always feels tailor-made.</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 – usage -->
+  <div class="slide" id="s4">
+    <div class="tag">How often do I use it?</div>
+    <h2>Every. <span class="hl">Single. Day.</span></h2>
+    <div class="usage-big">1–2 hrs</div>
+    <p class="usage-sub">daily average</p>
+    <div class="when-chips">
+      <span class="when-chip">🌙 Evening after studying</span>
+      <span class="when-chip">☕ Morning routine</span>
+      <span class="when-chip">🎉 Weekends</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 – like / dislike -->
+  <div class="slide" id="s5">
+    <div class="tag">What I like & dislike</div>
+    <h2>Honest <span class="hl">Review</span></h2>
+    <div class="ld-row">
+      <div class="ld-col like">
+        <div class="ld-head">✔ What I Love</div>
+        <div class="ld-item"><span>🎯</span> Endless content — something for literally everyone.</div>
+        <div class="ld-item"><span>🎓</span> Educational channels that help me learn outside class.</div>
+        <div class="ld-item"><span>🎵</span> Great music videos to unwind after a long day.</div>
+      </div>
+      <div class="ld-col dislike">
+        <div class="ld-head">✘ What I Dislike</div>
+        <div class="ld-item"><span>📢</span> Ads can be very annoying and interrupt the experience.</div>
+        <div class="ld-item"><span>🌀</span> Easy to lose track of time and watch for too long.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 – closing -->
+  <div class="slide" id="s6">
+    <div class="ring"></div>
+    <h2>YouTube is more than entertainment —<br/>it's where I <span class="hl">learn, relax, and grow.</span></h2>
+    <p style="color:var(--muted);font-size:.88rem;margin:12px 0 20px;">That is everything I want to share about my favorite app.</p>
+    <span class="thanks-btn">Thank you for listening! 🙏</span>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button id="btnPrev" onclick="go(cur-1)" disabled>← Prev</button>
+  <div class="dots" id="dots"></div>
+  <button id="btnNext" onclick="go(cur+1)">Next →</button>
+</div>
+<p class="hint">Click slide or use ← → arrow keys to navigate</p>
+
+<div class="script-panel">
+  <div class="script-header">
+    <h3>🎤 Speaking Script</h3>
+    <span id="scriptSlide">Slide 1 of 6</span>
+  </div>
+  <p class="script-text" id="scriptText"></p>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const scripts = [
+  `<em>Hello everyone!</em> Today, I want to talk about my favorite app — <em>YouTube</em>.`,
+  `YouTube is a <em>free video-sharing app</em> where people can watch, upload, and share videos on almost any topic imaginable. It covers everything from music and movies to documentaries, tutorials, and live streams.`,
+  `This app can do so many things. You can watch content from any genre, <em>create your own channel</em> and upload videos to share with others, and YouTube also <em>recommends videos</em> based on what you watch — so it always feels personalized just for you.`,
+  `I use YouTube <em>every single day</em> — usually in the evening to unwind after studying, or during my free time on weekends. I would say I spend about <em>one to two hours</em> on it daily.`,
+  `What I <em>love most</em> about YouTube is how much content it offers — there is literally something for everyone. Personally, I enjoy watching <em>educational channels</em> and music videos the most. However, one thing I <em>dislike</em> is that the ads can be quite annoying and interrupt the watching experience.`,
+  `That is everything I want to share about my favorite app. <em>Thank you for listening!</em>`
+];
+let cur = 0;
+
+function buildDots() {
+  const c = document.getElementById('dots');
+  c.innerHTML = '';
+  slides.forEach((_,i) => {
+    const b = document.createElement('button');
+    b.className = 'dot-btn' + (i===cur?' on':'');
+    b.onclick = () => go(i);
+    c.appendChild(b);
+  });
+}
+
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = `${cur+1} / ${slides.length}`;
+  document.getElementById('scriptSlide').textContent = `Slide ${cur+1} of ${slides.length}`;
+  document.getElementById('scriptText').innerHTML = scripts[cur];
+  document.getElementById('btnPrev').disabled = cur === 0;
+  document.getElementById('btnNext').disabled = cur === slides.length - 1;
+  buildDots();
+}
+
+function next() { go(cur+1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(cur+1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(cur-1);
+});
+
+go(0);
+</script>
+</body>
+</html>

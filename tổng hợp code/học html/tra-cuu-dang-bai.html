@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tra Cứu Dạng Bài – Giải Tích</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'IBM Plex Sans',sans-serif; font-size:11px; background:#fff; color:#111; padding:8mm; }
+
+  @media print {
+    body { padding:5mm; font-size:10.5px; }
+    .page-break { page-break-before: always; margin-top:0; }
+    .no-break { page-break-inside: avoid; }
+    h1 { font-size:14px; }
+  }
+
+  h1 { font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+       border-bottom:3px solid #111; padding-bottom:4px; margin-bottom:10px; }
+
+  .chapter { margin-bottom:12px; }
+  .chapter-title {
+    font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
+    background:#111; color:#fff; padding:3px 8px; margin-bottom:7px;
+  }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+
+  .card {
+    border:1.5px solid #222; padding:7px 9px;
+  }
+  .card h2 {
+    font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    background:#333; color:#fff; margin:-7px -9px 6px -9px; padding:3px 9px;
+  }
+  .card h2 .tag-casio {
+    background:#888; font-size:9px; padding:0 4px; margin-left:4px; font-weight:400; border-radius:2px;
+  }
+
+  .de { background:#f5f5f5; border-left:3px solid #555; padding:3px 7px; margin:3px 0; line-height:1.5; font-size:10.5px; }
+  .sol { border-left:3px solid #111; padding:3px 7px; margin:3px 0; line-height:1.55; font-size:10.5px; }
+  .sol b { font-weight:700; }
+  .ans { display:inline-block; background:#111; color:#fff; font-family:'IBM Plex Mono',monospace;
+          font-size:9.5px; padding:1px 5px; border-radius:2px; }
+  .warn { background:#fff3f3; border-left:3px solid #c00; padding:3px 7px; margin:3px 0; font-size:10.5px; line-height:1.5; }
+  .key { background:#f0f7ff; border-left:3px solid #336; padding:3px 7px; margin:3px 0; font-size:10.5px; line-height:1.5; }
+  .mono { font-family:'IBM Plex Mono',monospace; font-size:10px; }
+
+  ol.steps { padding-left:16px; margin:3px 0; }
+  ol.steps li { margin:1px 0; line-height:1.5; }
+
+  .btn { display:inline-block; background:#444; color:#fff; font-family:'IBM Plex Mono',monospace;
+         font-size:9px; padding:0 4px; border-radius:2px; }
+
+  table { width:100%; border-collapse:collapse; font-size:10.5px; margin:4px 0; }
+  th { background:#333; color:#fff; padding:2px 5px; text-align:left; font-size:10px; }
+  td { border:1px solid #ccc; padding:2px 5px; line-height:1.4; vertical-align:top; }
+  tr:nth-child(even) td { background:#f8f8f8; }
+
+  hr { border:none; border-top:2px solid #111; margin:10px 0; }
+</style>
+</head>
+<body>
+
+<h1>Tra Cứu Dạng Bài Giải Tích – Từ Đề Mẫu</h1>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="chapter">
+<div class="chapter-title">A. Hàm Số – Giới Hạn – Liên Tục</div>
+<div class="grid2">
+
+  <div class="card no-break">
+    <h2>Dạng 1 · Mô hình tuyến tính y = mx + b <span class="tag-casio">🖩 Equation</span></h2>
+    <div class="de">Nhiệt độ T = mx+b. Năm 1950 → 9.5°C, năm 2000 → 10.5°C. Tính năm 2050.</div>
+    <div class="sol">
+      <b>Bước 1:</b> Đổi năm → x (từ 1900): 1950→x=50, 2000→x=100, 2050→x=150<br>
+      <b>Bước 2:</b> Lập hệ: 50m+b=9.5 và 100m+b=10.5<br>
+      <b>Bước 3:</b> <span class="btn">Equation → Simultaneous → 2 ẩn</span> → m=0.02, b=8.5<br>
+      <b>Bước 4:</b> T(150) = 0.02×150 + 8.5 = <span class="ans">11.5°C</span>
+    </div>
+    <div class="key">Công thức: m = (y₂-y₁)/(x₂-x₁), sau đó b = y₁ - m·x₁</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 2 · Hàm mũ aᵗ ≤ k, tìm t <span class="tag-casio">🖩 Solver</span></h2>
+    <div class="de">P = 10(0.9)ᵗ. Cần bao lâu để còn 1/3 ban đầu?</div>
+    <div class="sol">
+      <b>Bước 1:</b> Giá trị cần đạt = 10/3<br>
+      <b>Bước 2:</b> Lập PT: 10(0.9)ᵗ = 10/3 → (0.9)ᵗ = 1/3<br>
+      <b>Bước 3:</b> <span class="btn">Solver</span>: nhập <span class="mono">0.9^x - 1/3 = 0</span>, giá trị ban đầu x=10 → EXE<br>
+      → t ≈ <span class="ans">10.43 phút</span>
+    </div>
+    <div class="warn">⚠ Khi lấy ln tay: ln(0.9)&lt;0 → đổi chiều bất đẳng thức!</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 3 · Giới hạn 1 phía, hàm phân nhánh</h2>
+    <div class="de">f(x)=x²+x (x&lt;0), f(x)=2-x (x≥0). Tìm lim(x→0⁻).</div>
+    <div class="sol">
+      x→0⁻ → dùng nhánh x&lt;0: f(x)=x²+x<br>
+      lim(x→0⁻)(x²+x) = 0+0 = <span class="ans">0</span>
+    </div>
+    <div class="key"><b>Quy tắc:</b> x→a⁻ dùng nhánh x&lt;a · x→a⁺ dùng nhánh x&gt;a</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 4 · Tìm m để hàm liên tục</h2>
+    <div class="de">f(x) = (x+2024)/x (x≥1), f(x) = m-x (x&lt;1). Tìm m để liên tục tại x=1.</div>
+    <div class="sol">
+      <b>Điều kiện:</b> lim trái = lim phải = f(1)<br>
+      f(1) = (1+2024)/1 = 2025<br>
+      lim(x→1⁻) = m-1<br>
+      m-1 = 2025 → <span class="ans">m = 2026</span>
+    </div>
+    <div class="key">3 bước: tính f(a) · tính lim trái · cho bằng nhau → giải m</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="chapter">
+<div class="chapter-title">B. Đạo Hàm – Tối Ưu Hóa</div>
+<div class="grid2">
+
+  <div class="card no-break">
+    <h2>Dạng 5 · Đạo hàm hàm hợp + quy tắc nhân <span class="tag-casio">🖩 d/dx</span></h2>
+    <div class="de">f(x) = eˣ·g(2024x), g(0)=1, g'(0)=2. Tính f'(0).</div>
+    <div class="sol">
+      <b>Quy tắc nhân:</b> f'(x) = eˣ·g(2024x) + eˣ·[g(2024x)]'<br>
+      <b>Chain rule:</b> [g(2024x)]' = 2024·g'(2024x)<br>
+      <b>Tại x=0:</b> f'(0) = 1·g(0) + 1·2024·g'(0) = 1 + 2024×2 = <span class="ans">4049</span>
+    </div>
+    <div class="key">Với Casio: nhập hàm số đầy đủ → d/dx tại x=0 (nếu biết g cụ thể)</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 6 · Tốc độ biến thiên tức thời P'(t) <span class="tag-casio">🖩 d/dx</span></h2>
+    <div class="de">P = 5(0.8)ᵗ. Tốc độ biến thiên sau 5 phút.</div>
+    <div class="sol">
+      Công thức: d/dt(aᵗ) = aᵗ·ln(a)<br>
+      P'(t) = 5·(0.8)ᵗ·ln(0.8)<br>
+      Tại t=5: <span class="btn">d/dx</span> nhập <span class="mono">5×0.8^x×ln(0.8)</span> tại x=5<br>
+      → <span class="ans">5·(0.8)⁵·ln(0.8)</span> ≈ −0.744 triệu con/phút
+    </div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 7 · Tối ưu chuyển động h(t) <span class="tag-casio">🖩 Solver</span></h2>
+    <div class="de">h(t) = 5 + 24.5t − 4.9t². Tìm vị trí cao nhất.</div>
+    <div class="sol">
+      <b>Bước 1:</b> h'(t) = 24.5 − 9.8t = 0 → t = 2.5 giây<br>
+      <b>Bước 2:</b> h(2.5) = 5 + 24.5×2.5 − 4.9×6.25 = <span class="ans">35.625 m</span>
+    </div>
+    <div class="key">Max/Min khi h'(t)=0. Dùng Solver: nhập 24.5−9.8x=0</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 8 · Tối ưu hình học (hộp, hàng rào…) <span class="tag-casio">🖩 Solver</span></h2>
+    <div class="de">Hộp không nắp đáy vuông x, V=32. Tìm x để ít vật liệu nhất.</div>
+    <div class="sol">
+      <b>Bước 1:</b> Rút h = 32/x²<br>
+      <b>Bước 2:</b> S(x) = x² + 4x·(32/x²) = x² + 128/x<br>
+      <b>Bước 3:</b> S'(x) = 2x − 128/x² = 0 → 2x³=128 → <span class="ans">x = 4 cm</span>
+    </div>
+    <div class="key">Quy trình: đặt biến → rút ràng buộc → lập hàm 1 biến → S'=0</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="chapter page-break">
+<div class="chapter-title">C. Tích Phân & Ứng Dụng</div>
+<div class="grid2">
+
+  <div class="card no-break">
+    <h2>Dạng 9 · Tích phân đổi biến u <span class="tag-casio">🖩 ∫</span></h2>
+    <div class="de">I = ∫₁² 1/(3x+1)² dx</div>
+    <div class="sol">
+      Đặt u=3x+1 → du=3dx → dx=du/3<br>
+      Đổi cận: x=1→u=4, x=2→u=7<br>
+      I = (1/3)∫₄⁷ u⁻² du = (1/3)[-1/u]₄⁷ = (1/3)(−1/7+1/4) = <span class="ans">1/28</span>
+    </div>
+    <div class="key">Casio: nhập thẳng <span class="mono">∫(1/(3x+1)², 1, 2)</span> → kiểm tra</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 10 · Thể tích xoay quanh Ox <span class="tag-casio">🖩 π×∫</span></h2>
+    <div class="de">y=√(2x+1), y=0, x=1, x=2 quay quanh Ox.</div>
+    <div class="sol">
+      V = π∫₁²[f(x)]² dx = π∫₁²(2x+1)dx<br>
+      = π[x²+x]₁² = π[(4+2)−(1+1)] = <span class="ans">4π</span>
+    </div>
+    <div class="key">Casio: <span class="mono">π × ∫((√(2x+1))², 1, 2)</span> → nhớ nhân π ngoài!</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 11 · Tích phân suy rộng tính trực tiếp <span class="tag-casio">🖩 ∫</span></h2>
+    <div class="de">I = ∫₀^∞ e^(−2024x) dx</div>
+    <div class="sol">
+      Nguyên hàm: −(1/2024)e^(−2024x)<br>
+      I = lim(t→∞)[−(1/2024)e^(−2024t)] − [−(1/2024)e⁰]<br>
+      = 0 + 1/2024 = <span class="ans">1/2024</span>
+    </div>
+    <div class="key">Casio: <span class="mono">∫(e^(−2024x), 0, 10⁶)</span> → xấp xỉ đủ tốt</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 12 · Nhận dạng tích phân suy rộng hội tụ</h2>
+    <div class="de">Trong 4 đáp án, tìm tích phân hội tụ.</div>
+    <div class="sol">
+      Loại 2 (gián đoạn tại cận): ∫ₐᵇ 1/(x−a)ᵖ<br>
+      p=2024 hoặc 2025 → p≥1 → Phân kỳ ❌<br>
+      p=1/2 &lt; 1 → <span class="ans">Hội tụ ✓</span>
+    </div>
+    <div class="warn">Loại 2: p&lt;1 hội tụ (NGƯỢC với Loại 1 cận ∞)</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 13 · Vị trí từ vận tốc s(t) <span class="tag-casio">🖩 ∫</span></h2>
+    <div class="de">v(t) = 9t²+4t+2024. Quãng đường sau t giây.</div>
+    <div class="sol">
+      s = ∫₀ᵗ v(u)du = [3u³+2u²+2024u]₀ᵗ<br>
+      = <span class="ans">3t³ + 2t² + 2024t</span> (m)
+    </div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 14 · Lượng tổng cộng từ tốc độ <span class="tag-casio">🖩 ∫</span></h2>
+    <div class="de">r(t)=2024−2t lít/phút. Lượng nước trong 1 giờ.</div>
+    <div class="sol">
+      Đổi: 1 giờ = 60 phút<br>
+      V = ∫₀⁶⁰(2024−2t)dt = [2024t−t²]₀⁶⁰<br>
+      = 2024×60 − 3600 = <span class="ans">117840 lít</span>
+    </div>
+    <div class="key">Lượng tổng = tích phân tốc độ theo thời gian</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="chapter page-break">
+<div class="chapter-title">D. Hàm Nhiều Biến – Đạo Hàm Riêng</div>
+<div class="grid2">
+
+  <div class="card no-break">
+    <h2>Dạng 21 · Tính giá trị hàm 2 biến <span class="tag-casio">🖩 thay số</span></h2>
+    <div class="de">T(x,y) = 100/(1+x²+y²). Tính T(2,1).</div>
+    <div class="sol">
+      T(2,1) = 100/(1+4+1) = <span class="ans">50/3</span>
+    </div>
+    <div class="key">Thay số trực tiếp vào hàm, bấm máy tính bình thường</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 22 · Đạo hàm riêng cấp 1 fₓ, f_y <span class="tag-casio">🖩 d/dx*</span></h2>
+    <div class="de">f(x,y)=x³y−x²y²+xeʸ−y+2025. Tính fₓ.</div>
+    <div class="sol">
+      Xem y là hằng số, đạo hàm theo x:<br>
+      fₓ = 3x²y − 2xy² + eʸ
+    </div>
+    <div class="de" style="margin-top:5px">z=xeʸ−xy+4. Tính f_y(a,0).</div>
+    <div class="sol">
+      f_y = xeʸ−x. Tại y=0: ae⁰−a = <span class="ans">0</span>
+    </div>
+    <div class="key">*Casio: thay y=y₀ vào hàm → đạo hàm 1 biến theo x bằng d/dx</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 30 · Đạo hàm riêng cấp 2 fₓᵧ</h2>
+    <div class="de">f(x,y)=−2xy²+4xy+20. Tính fₓᵧ(1,1).</div>
+    <div class="sol">
+      <b>Bước 1:</b> fₓ = −2y²+4y (đạo hàm theo x)<br>
+      <b>Bước 2:</b> fₓᵧ = ∂/∂y(−2y²+4y) = −4y+4<br>
+      <b>Bước 3:</b> tại y=1: −4+4 = <span class="ans">0</span>
+    </div>
+    <div class="key">Clairaut: fₓᵧ = f_yₓ (thứ tự không quan trọng khi liên tục)</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 29 · Vi phân toàn phần dz</h2>
+    <div class="de">z=x³y²+2x+3y+12. Tìm dz.</div>
+    <div class="sol">
+      dz = fₓdx + f_ydy<br>
+      fₓ = 3x²y²+2, f_y = 2x³y+3<br>
+      → <span class="ans">dz = (3x²y²+2)dx + (2x³y+3)dy</span>
+    </div>
+    <div class="key">Luôn tính fₓ và f_y trước → ghép vào công thức dz</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 31 · Mặt phẳng tiếp xúc</h2>
+    <div class="de">z=x²+2y²−3xy+1 tại (1;2;4). Tìm PT mặt phẳng tiếp xúc.</div>
+    <div class="sol">
+      fₓ = 2x−3y → fₓ(1,2) = −4<br>
+      f_y = 4y−3x → f_y(1,2) = 5<br>
+      PT: z−4 = −4(x−1)+5(y−2)<br>
+      → <span class="ans">z = −4x+5y−2</span>
+    </div>
+    <div class="key">Công thức: z−z₀ = fₓ(x₀,y₀)(x−x₀) + f_y(x₀,y₀)(y−y₀)</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 37 · Phân loại điểm tới hạn (D-test)</h2>
+    <div class="de">z=x³−y³−3x+3y+2025. Phân tích điểm (1;−1).</div>
+    <div class="sol">
+      fₓₓ=6x, f_yy=−6y, fₓᵧ=0<br>
+      Tại (1,−1): fₓₓ=6, f_yy=6<br>
+      D = 6×6−0² = 36 &gt; 0, fₓₓ&gt;0<br>
+      → <span class="ans">Cực tiểu địa phương</span>
+    </div>
+    <div class="key">D=fₓₓ·f_yy−(fₓᵧ)². D&gt;0,fₓₓ&gt;0→min · D&gt;0,fₓₓ&lt;0→max · D&lt;0→yên ngựa</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 38 · Đếm số điểm tới hạn <span class="tag-casio">🖩 Solver</span></h2>
+    <div class="de">z=8x³−24xy+8y³. Có bao nhiêu điểm tới hạn?</div>
+    <div class="sol">
+      fₓ=24x²−24y=0 → y=x²<br>
+      f_y=−24x+24y²=0 → x=y²<br>
+      Thế: x=x⁴ → x(x³−1)=0 → x=0 hoặc x=1<br>
+      → <span class="ans">2 điểm tới hạn: (0,0) và (1,1)</span>
+    </div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 24 · Tìm điểm tới hạn hệ tuyến tính <span class="tag-casio">🖩 Equation</span></h2>
+    <div class="de">f=−x²+12y²−4xy+2x−28y+2025. Điểm tới hạn?</div>
+    <div class="sol">
+      fₓ=−2x−4y+2=0 → x+2y=1<br>
+      f_y=24y−4x−28=0<br>
+      <span class="btn">Equation→Simultaneous→2 ẩn</span> → <span class="ans">(−1; 1)</span>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="chapter page-break">
+<div class="chapter-title">E. Tích Phân Kép – Ba – Đường</div>
+<div class="grid2">
+
+  <div class="card no-break">
+    <h2>Dạng 25 · Đổi thứ tự tích phân (hình chữ nhật)</h2>
+    <div class="de">∫₀¹∫₋₁³ f(x,y)dydx → đổi thứ tự.</div>
+    <div class="sol">
+      Miền HCN: x∈[0,1], y∈[−1,3]<br>
+      → Fubini: <span class="ans">∫₋₁³∫₀¹ f(x,y)dxdy</span>
+    </div>
+    <div class="key">HCN: chỉ hoán đổi cận, giữ nguyên hàm</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 33 · Đổi thứ tự (miền không HCN)</h2>
+    <div class="de">Miền D: y=x và y=x². Lập tích phân lặp loại I của (x²y−4x).</div>
+    <div class="sol">
+      Giao điểm: x²=x → x=0,1<br>
+      Trên [0,1]: x² ≤ y ≤ x<br>
+      → <span class="ans">∫₀¹∫ₓ²ˣ (x²y−4x)dydx</span>
+    </div>
+    <div class="key">Bước: vẽ miền → xác định y_dưới, y_trên theo x → viết cận</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 26 · Tích phân kép = 0 do tích phân lẻ <span class="tag-casio">🖩 ∫∫</span></h2>
+    <div class="de">I=∫₀²∫₋₁¹(4xy)dydx.</div>
+    <div class="sol">
+      Tích phân theo y trước:<br>
+      ∫₋₁¹ 4xy dy = 4x[y²/2]₋₁¹ = 4x(1/2−1/2) = 0<br>
+      → I = <span class="ans">0</span>
+    </div>
+    <div class="key">Nếu cận y đối xứng [−a,a] và hàm lẻ theo y → tích phân = 0</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 39 · Tách tích phân kép f(x)·g(y) <span class="tag-casio">🖩 ∫×∫</span></h2>
+    <div class="de">I=∫₀²∫₀¹ 3y²eˣ dxdy.</div>
+    <div class="sol">
+      Hàm tách được: 3y²·eˣ trên HCN<br>
+      I = (∫₀² 3y²dy)×(∫₀¹ eˣdx)<br>
+      = [y³]₀² × [eˣ]₀¹ = 8×(e−1) = <span class="ans">8(e−1)</span>
+    </div>
+    <div class="key">Trên HCN, f(x,y)=g(x)·h(y) → tách ra 2 tích phân nhân nhau</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 34 · Tích phân kép tọa độ cực</h2>
+    <div class="de">I=∬ᴿ xy dA, R: x²+y²≤4, x≤0, y≤0.</div>
+    <div class="sol">
+      Góc phần tư 3: r∈[0,2], θ∈[π, 3π/2]<br>
+      x=rcosθ, y=rsinθ, dA=r dr dθ<br>
+      → <span class="ans">∫_π^(3π/2) ∫₀² r³cosθsinθ drdθ</span>
+    </div>
+    <div class="key">Tọa độ cực: dA=r·dr·dθ (không quên nhân r!)</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 27 · Tích phân bội ba – tính 1 lớp <span class="tag-casio">🖩 ∫</span></h2>
+    <div class="de">I=∫₁²∫₁³∫₀¹(x²+2yz)dxdydz. Tích phân 1 lớp theo x.</div>
+    <div class="sol">
+      ∫₀¹(x²+2yz)dx = [x³/3+2yzx]₀¹ = 1/3+2yz<br>
+      → <span class="ans">I=∫₁²∫₁³(1/3+2yz)dydz</span>
+    </div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 36 · Tích phân đường Loại 1 (ds)</h2>
+    <div class="de">I=∫_C x²y ds, C: x=t²−1, y=t, t∈[1,3].</div>
+    <div class="sol">
+      ds=√(x'²+y'²)dt=√(4t²+1)dt<br>
+      x²y=(t²−1)²·t<br>
+      → <span class="ans">I=∫₁³ t(t²−1)²√(1+4t²) dt</span>
+    </div>
+    <div class="key">ds=√((dx/dt)²+(dy/dt)²)·dt · thế x,y,ds vào hàm</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng 40 · Tích phân đường Loại 2 (dx,dy) <span class="tag-casio">🖩 ∫</span></h2>
+    <div class="de">I=∫_C (y+2)dx+3x²dy, C: (1,−1)→(2,2).</div>
+    <div class="sol">
+      Tham số: x=1+t, y=−1+3t, t∈[0,1]<br>
+      dx=dt, dy=3dt<br>
+      I=∫₀¹[(3t+1)+9(t+1)²]dt=∫₀¹(9t²+21t+10)dt<br>
+      = [3t³+21t²/2+10t]₀¹ = 3+10.5+10 = <span class="ans">47/2</span>
+    </div>
+    <div class="key">Tham số hóa: x=x₁+t(x₂−x₁), y=y₁+t(y₂−y₁), t∈[0,1]</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="chapter page-break">
+<div class="chapter-title">F. Dãy Số – Chuỗi – Phương Trình Vi Phân</div>
+<div class="grid2">
+
+  <div class="card no-break">
+    <h2>Dạng S1 · Nhận dạng dãy hội tụ</h2>
+    <div class="de">Chọn dãy hội tụ trong: 2024ⁿ, (n²⁰²⁵−1)/(2n²⁰²⁴+1), (2025/2024)ⁿ, (1−n²⁰²⁵)/(n²⁰²⁵+n²⁰²⁴)</div>
+    <div class="sol">
+      A: cơ số&gt;1 → ∞ ❌ · B: bậc tử&gt;mẫu → ∞ ❌<br>
+      C: tỷ số&gt;1 → ∞ ❌<br>
+      D: ~−n²⁰²⁵/n²⁰²⁵ → <span class="ans">−1 ✓ (hội tụ)</span>
+    </div>
+    <div class="key">Dãy hội tụ khi lim = số hữu hạn. Chia tử/mẫu cho bậc cao nhất.</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng S2 · p-chuỗi phân kỳ</h2>
+    <div class="de">Chuỗi Σ 1/n^(1/2024) — hội tụ hay phân kỳ?</div>
+    <div class="sol">
+      p = 1/2024 &lt; 1 → <span class="ans">Phân kỳ</span>
+    </div>
+    <div class="key">Σ 1/nᵖ: p&gt;1→hội tụ, p≤1→phân kỳ (kể cả p=1 chuỗi điều hòa)</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng S3 · Tổng chuỗi hình học <span class="tag-casio">🖩 thay số</span></h2>
+    <div class="de">Σ 2024×(−0.1)ⁿ⁻¹. Tính tổng.</div>
+    <div class="sol">
+      a=2024, r=−0.1, |r|&lt;1 → hội tụ<br>
+      S = a/(1−r) = 2024/1.1 = <span class="ans">20240/11</span>
+    </div>
+    <div class="de" style="margin-top:5px">−1/2+1/4−1/8+... Tính tổng.</div>
+    <div class="sol">
+      a=−1/2, r=−1/2<br>
+      S = (−1/2)/(1+1/2) = <span class="ans">−1/3</span>
+    </div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng V1 · PT vi phân cấp 2 thuần nhất <span class="tag-casio">🖩 Equation</span></h2>
+    <div class="de">y''+2y'−3y=0. Nghiệm tổng quát?</div>
+    <div class="sol">
+      PT đặc trưng: r²+2r−3=0<br>
+      <span class="btn">Equation→bậc 2</span>: r₁=1, r₂=−3 (2 nghiệm phân biệt)<br>
+      → <span class="ans">y = c₁e⁻³ˣ + c₂eˣ</span>
+    </div>
+    <table style="margin-top:4px">
+      <tr><th>Nghiệm r</th><th>Dạng y</th></tr>
+      <tr><td>r₁≠r₂ thực</td><td>c₁eʳ¹ˣ+c₂eʳ²ˣ</td></tr>
+      <tr><td>r kép = r</td><td>c₁eʳˣ+c₂xeʳˣ</td></tr>
+      <tr><td>α±βi</td><td>eᵅˣ(c₁cosβx+c₂sinβx)</td></tr>
+    </table>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng V2 · PT vi phân cấp 2 nghiệm riêng (y''+y=sinx)</h2>
+    <div class="de">y''+y=sinx. Tìm nghiệm riêng.</div>
+    <div class="sol">
+      PT đặc trưng r=±i → y_c có sinx, cosx → trùng!<br>
+      Đặt y_p=x(Acosx+Bsinx)<br>
+      Tính y_p'', thế vào: −2Asinx+2Bcosx=sinx<br>
+      → A=−1/2, B=0<br>
+      → <span class="ans">y_p = −(x/2)cosx</span>
+    </div>
+    <div class="key">Khi vế phải trùng nghiệm thuần nhất → nhân thêm x vào dự đoán</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng V3 · PT vi phân cấp 1 tuyến tính + điều kiện ban đầu</h2>
+    <div class="de">y'+y=2eˣ, y(0)=4.</div>
+    <div class="sol">
+      P(x)=1 → I=e^(∫1dx)=eˣ<br>
+      Nhân 2 vế: (yeˣ)'=2e²ˣ<br>
+      yeˣ=e²ˣ+C → y=eˣ+Ce⁻ˣ<br>
+      y(0)=4: 1+C=4 → C=3<br>
+      → <span class="ans">y = eˣ+3e⁻ˣ</span>
+    </div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng V4 · PT tách biến dy/dx=f(x)g(y)</h2>
+    <div class="de">dy/dx = x²/y². Một nghiệm là?</div>
+    <div class="sol">
+      Tách: y²dy=x²dx<br>
+      Tích phân 2 vế: y³/3=x³/3+C₁<br>
+      → <span class="ans">y=∛(x³+C)</span>
+    </div>
+    <div class="key">Nhân chéo → tách x và y → tích phân từng vế độc lập</div>
+  </div>
+
+  <div class="card no-break">
+    <h2>Dạng V5 · Nhận dạng nghiệm PT vi phân (MCQ)</h2>
+    <div class="de">y''−2y'+y=e²ˣ. Đáp án nào là nghiệm?</div>
+    <div class="sol">
+      PT đặc trưng: (r−1)²=0 → r=1 (kép)<br>
+      Nghiệm thuần nhất: <span class="ans">y=c₁eˣ+c₂xeˣ</span><br>
+      <b>Cách kiểm tra nhanh:</b> thay từng đáp án vào PT → vế phải = e²ˣ thì đúng
+    </div>
+    <div class="key">Casio: tính y' và y'' của đáp án bằng d/dx → kiểm tra PT</div>
+  </div>
+
+</div>
+</div>
+
+<div style="margin-top:8px;padding:5px 8px;border:1px solid #999;font-size:9px;color:#555;text-align:center">
+  Tài liệu tra cứu dạng bài · Tổng hợp từ đề mẫu · In A4 · Ctrl+P → Scale to fit
+</div>
+
+</body>
+</html>

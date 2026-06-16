@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unilever — Phát Triển Bền Vững</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #0D3B2E;
+    --green-mid: #1A6B4A;
+    --green-light: #2E9E6B;
+    --green-pale: #A8D5B5;
+    --green-mist: #E6F4EC;
+    --gold: #C8A45A;
+    --gold-light: #E8CC8A;
+    --cream: #F9F5EE;
+    --white: #FFFFFF;
+    --text-dark: #1A1A1A;
+    --text-mid: #444444;
+    --text-muted: #888888;
+    --coral: #D4573A;
+    --amber: #E8943A;
+    --blue: #2A6EA6;
+    --teal: #1A7A6A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 32px;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+    background: rgba(0,0,0,0.6);
+    padding: 8px 12px;
+    border-radius: 24px;
+    backdrop-filter: blur(8px);
+  }
+  .nav button {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .nav button:hover { background: rgba(255,255,255,0.15); }
+  .nav button.active { background: var(--green-mid); border-color: var(--green-mid); }
+
+  /* Slide wrapper */
+  .slide-wrapper {
+    width: 100%;
+    max-width: 960px;
+    position: relative;
+  }
+  .slide-number {
+    color: rgba(255,255,255,0.35);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+
+  /* BASE SLIDE */
+  .slide {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+
+  /* ─── SLIDE 1: COVER ─── */
+  .slide-cover {
+    background: var(--green-dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .cover-left {
+    padding: 8% 8% 8% 9%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .cover-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--green-dark);
+    font-size: clamp(7px, 1.1vw, 11px);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    width: fit-content;
+    margin-bottom: 6%;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3.8vw, 42px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 4%;
+  }
+  .cover-title span { color: var(--green-pale); }
+  .cover-subtitle {
+    font-size: clamp(8px, 1.2vw, 13px);
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    max-width: 90%;
+  }
+  .cover-meta {
+    margin-top: 8%;
+    display: flex;
+    gap: 5%;
+  }
+  .cover-meta-item { }
+  .cover-meta-item .val {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(14px, 2.5vw, 28px);
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .cover-meta-item .lbl {
+    font-size: clamp(6px, 0.9vw, 9px);
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+  .cover-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-bg-pattern {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 80% at 60% 40%, rgba(46,158,107,0.35) 0%, transparent 70%),
+      linear-gradient(135deg, var(--green-mid) 0%, var(--green-dark) 100%);
+  }
+  .cover-leaf {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cover-leaf svg { width: 65%; opacity: 0.18; }
+  .cover-pillars {
+    position: absolute;
+    bottom: 8%;
+    left: 8%;
+    right: 8%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4%;
+  }
+  .cover-pillar {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8% 6%;
+    text-align: center;
+  }
+  .cover-pillar .p-icon { font-size: clamp(10px, 1.8vw, 20px); margin-bottom: 4px; }
+  .cover-pillar .p-lbl { font-size: clamp(5px, 0.8vw, 9px); color: rgba(255,255,255,0.6); letter-spacing: 0.05em; }
+  .cover-bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--green-light) 50%, var(--gold) 100%);
+  }
+
+  /* ─── SLIDE 2: OVERVIEW ─── */
+  .slide-overview {
+    background: var(--cream);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 6% 7%;
+    gap: 4%;
+  }
+  .slide-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .slide-section-tag {
+    font-size: clamp(6px, 0.85vw, 9px);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 6px;
+  }
+  .slide-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 2.8vw, 32px);
+    font-weight: 700;
+    color: var(--green-dark);
+    line-height: 1.15;
+  }
+  .slide-h1 em { color: var(--green-light); font-style: normal; }
+  .slide-logo {
+    width: clamp(40px, 7%, 70px);
+    height: clamp(40px, 7%, 70px);
+    background: var(--green-dark);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .slide-logo span {
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(10px, 1.8vw, 18px);
+  }
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3%;
+  }
+  .overview-card {
+    background: white;
+    border-radius: 10px;
+    padding: 6% 7%;
+    border-left: 3px solid var(--green-light);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .ov-icon {
+    width: clamp(24px, 4%, 40px);
+    height: clamp(24px, 4%, 40px);
+    border-radius: 50%;
+    background: var(--green-mist);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6%;
+    font-size: clamp(10px, 1.6vw, 16px);
+  }
+  .ov-title {
+    font-size: clamp(8px, 1.2vw, 13px);
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 3%;
+  }
+  .ov-text {
+    font-size: clamp(6px, 0.9vw, 10px);
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+  .ov-stat {
+    margin-top: 5%;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(14px, 2.2vw, 24px);
+    font-weight: 700;
+    color: var(--green-mid);
+  }
+  .slide-accent-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-dark), var(--green-light), var(--gold));
+  }
+
+  /* ─── SLIDE 3: SOLUTIONS ─── */
+  .slide-solutions {
+    background: var(--green-dark);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 5% 6%;
+    gap: 3%;
+    position: relative;
+    overflow: hidden;
+  }
+  .sol-bg {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 50%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(46,158,107,0.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .sol-header .slide-section-tag { color: var(--gold); }
+  .sol-header .slide-h1 { color: white; }
+  .sol-header .slide-h1 em { color: var(--green-pale); }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2%;
+    position: relative;
+    z-index: 1;
+  }
+  .sol-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 6% 5%;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .sol-card:hover { background: rgba(255,255,255,0.1); }
+  .sol-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 34px);
+    font-weight: 900;
+    color: rgba(255,255,255,0.12);
+    margin-bottom: 3%;
+  }
+  .sol-icon-box {
+    width: clamp(20px, 3.5%, 36px);
+    height: clamp(20px, 3.5%, 36px);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5%;
+    font-size: clamp(8px, 1.4vw, 14px);
+  }
+  .sol-title {
+    font-size: clamp(7px, 1.05vw, 11px);
+    font-weight: 600;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 4%;
+    flex-grow: 1;
+  }
+  .sol-kpi {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(10px, 1.6vw, 16px);
+    font-weight: 700;
+    margin-bottom: 2%;
+  }
+  .sol-desc {
+    font-size: clamp(5px, 0.78vw, 8px);
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+  }
+  .c1 .sol-icon-box { background: rgba(26,106,74,0.6); }
+  .c1 .sol-kpi { color: var(--green-pale); }
+  .c2 .sol-icon-box { background: rgba(200,164,90,0.3); }
+  .c2 .sol-kpi { color: var(--gold-light); }
+  .c3 .sol-icon-box { background: rgba(42,110,166,0.4); }
+  .c3 .sol-kpi { color: #8EC4F0; }
+  .c4 .sol-icon-box { background: rgba(212,87,58,0.35); }
+  .c4 .sol-kpi { color: #F4A090; }
+  .c5 .sol-icon-box { background: rgba(26,122,106,0.4); }
+  .c5 .sol-kpi { color: #7FD4C8; }
+
+  /* ─── SLIDE 4: LADDER ─── */
+  .slide-ladder {
+    background: white;
+    display: grid;
+    grid-template-columns: 38% 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .ladder-left {
+    background: var(--green-dark);
+    padding: 7% 7% 7% 7%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .ladder-left::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(46,158,107,0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .ladder-left .slide-section-tag { color: var(--gold); }
+  .ladder-left .slide-h1 { color: white; font-size: clamp(13px, 2.2vw, 26px); }
+  .ladder-left .slide-h1 em { color: var(--green-pale); }
+  .ladder-desc {
+    font-size: clamp(6px, 0.9vw, 10px);
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+    margin-top: 5%;
+  }
+  .ladder-verdict {
+    margin-top: 7%;
+    padding: 5% 6%;
+    background: rgba(200,164,90,0.15);
+    border: 1px solid rgba(200,164,90,0.3);
+    border-radius: 8px;
+  }
+  .ladder-verdict .v-label {
+    font-size: clamp(5px, 0.75vw, 8px);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .ladder-verdict .v-text {
+    font-size: clamp(7px, 1vw, 11px);
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+  }
+  .ladder-right {
+    padding: 5% 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2%;
+  }
+  .ladder-step {
+    display: grid;
+    grid-template-columns: clamp(18px, 3%, 32px) 1fr;
+    gap: 3%;
+    align-items: stretch;
+    padding: 3.5% 4%;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ls-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(12px, 2vw, 22px);
+    font-weight: 900;
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .ls-content { }
+  .ls-title {
+    font-size: clamp(7px, 1.05vw, 11px);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .ls-body {
+    font-size: clamp(5.5px, 0.8vw, 9px);
+    line-height: 1.5;
+  }
+  .ls-badge {
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    transform: translateY(-50%);
+    font-size: clamp(5px, 0.7vw, 7px);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 10px;
+  }
+
+  .step-1 { background: #F5F5F5; border-left: 3px solid #CCC; }
+  .step-1 .ls-num { color: #CCC; }
+  .step-1 .ls-title { color: #666; }
+  .step-1 .ls-body { color: #999; }
+  .step-1 .ls-badge { background: #E8E8E8; color: #888; }
+
+  .step-2 { background: #FEF0EC; border-left: 3px solid var(--coral); }
+  .step-2 .ls-num { color: #F4BEB0; }
+  .step-2 .ls-title { color: var(--coral); }
+  .step-2 .ls-body { color: #B05540; }
+  .step-2 .ls-badge { background: #FADDD7; color: var(--coral); }
+
+  .step-3 { background: #EEF5FB; border-left: 3px solid var(--blue); }
+  .step-3 .ls-num { color: #B0CCEC; }
+  .step-3 .ls-title { color: var(--blue); }
+  .step-3 .ls-body { color: #3A6080; }
+  .step-3 .ls-badge { background: #D5E6F5; color: var(--blue); }
+
+  .step-4 { background: #E8F6EF; border-left: 4px solid var(--green-mid); box-shadow: 0 2px 12px rgba(26,107,74,0.12); }
+  .step-4 .ls-num { color: #A8D5B5; }
+  .step-4 .ls-title { color: var(--green-dark); }
+  .step-4 .ls-body { color: var(--green-mid); }
+  .step-4 .ls-badge { background: #C5E8D5; color: var(--green-dark); }
+
+  /* ─── SLIDE 5: CONTRADICTION ─── */
+  .slide-tension {
+    background: var(--cream);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 5.5% 6.5%;
+    gap: 4%;
+    position: relative;
+  }
+  .tension-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3%;
+  }
+  .tension-col { display: flex; flex-direction: column; gap: 3%; }
+  .tension-col-title {
+    font-size: clamp(7px, 1vw, 11px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4% 5%;
+    border-radius: 8px;
+  }
+  .t-positive { background: var(--green-dark); color: var(--green-pale); }
+  .t-negative { background: #3A1A10; color: #F4B0A0; }
+  .tension-item {
+    padding: 4% 5%;
+    border-radius: 8px;
+    border-left: 3px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ti-label {
+    font-size: clamp(6px, 0.85vw, 9px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .ti-text {
+    font-size: clamp(6.5px, 0.92vw, 10px);
+    line-height: 1.5;
+  }
+  .ti-stat {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(11px, 1.8vw, 20px);
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .ti-green { background: #EDF7F2; border-color: var(--green-mid); }
+  .ti-green .ti-label { color: var(--green-mid); }
+  .ti-green .ti-text { color: var(--green-dark); }
+  .ti-green .ti-stat { color: var(--green-mid); }
+
+  .ti-red { background: #FDF0EE; border-color: var(--coral); }
+  .ti-red .ti-label { color: var(--coral); }
+  .ti-red .ti-text { color: #7A2A1A; }
+  .ti-red .ti-stat { color: var(--coral); }
+
+  .tension-bottom {
+    position: absolute;
+    bottom: 4%;
+    left: 6.5%;
+    right: 6.5%;
+    background: var(--green-dark);
+    border-radius: 8px;
+    padding: 3% 5%;
+    display: flex;
+    align-items: center;
+    gap: 3%;
+  }
+  .tb-icon { font-size: clamp(10px, 1.6vw, 16px); flex-shrink: 0; }
+  .tb-text { font-size: clamp(6px, 0.88vw, 9.5px); color: rgba(255,255,255,0.8); line-height: 1.5; }
+  .tb-text strong { color: var(--gold); }
+
+  /* ─── SLIDE 6: CONCLUSION ─── */
+  .slide-conclusion {
+    background: var(--green-dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .conc-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(46,158,107,0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .conc-left {
+    padding: 7% 6% 7% 7%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .conc-left .slide-section-tag { color: var(--gold); }
+  .conc-left .slide-h1 { color: white; font-size: clamp(15px, 2.5vw, 28px); }
+  .conc-quote {
+    margin-top: 6%;
+    padding: 5% 6%;
+    border-left: 3px solid var(--gold);
+    background: rgba(200,164,90,0.1);
+    border-radius: 0 8px 8px 0;
+  }
+  .cq-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8px, 1.2vw, 13px);
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+  }
+  .cq-source {
+    margin-top: 5%;
+    font-size: clamp(5.5px, 0.8vw, 8px);
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .conc-right {
+    padding: 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3%;
+    position: relative;
+    z-index: 1;
+  }
+  .conc-metric {
+    display: flex;
+    align-items: center;
+    gap: 4%;
+    padding: 4% 5%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+  }
+  .cm-val {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(14px, 2.4vw, 26px);
+    font-weight: 700;
+    flex-shrink: 0;
+    min-width: 25%;
+    text-align: center;
+  }
+  .cm-label { font-size: clamp(6px, 0.9vw, 9.5px); color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .cm-g .cm-val { color: var(--green-pale); }
+  .cm-a .cm-val { color: var(--gold-light); }
+  .cm-b .cm-val { color: #8EC4F0; }
+  .cm-r .cm-val { color: #F4B0A0; }
+
+  .conc-footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-light), var(--gold), var(--green-light));
+  }
+
+  /* Slide label */
+  .slide-tag-fixed {
+    position: absolute;
+    bottom: 4%;
+    right: 4%;
+    font-size: clamp(5px, 0.75vw, 8px);
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .slide-tag-fixed-dark {
+    position: absolute;
+    bottom: 4%;
+    right: 4%;
+    font-size: clamp(5px, 0.75vw, 8px);
+    color: rgba(0,0,0,0.2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <button onclick="scrollTo(0)" class="active">01</button>
+  <button onclick="goSlide(1)">02</button>
+  <button onclick="goSlide(2)">03</button>
+  <button onclick="goSlide(3)">04</button>
+  <button onclick="goSlide(4)">05</button>
+  <button onclick="goSlide(5)">06</button>
+</div>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide-wrapper" id="s0">
+  <div class="slide-number">Slide 01 / 06 — Trang Bìa</div>
+  <div class="slide slide-cover">
+    <div class="cover-left">
+      <div class="cover-tag">Phát Triển Bền Vững · ESG Analysis</div>
+      <div class="cover-title">
+        Unilever &<br><span>Chiến Lược</span><br>Bền Vững
+      </div>
+      <div class="cover-subtitle">Phân tích toàn diện chiến lược môi trường và xã hội theo khung 4 bậc thang quản lý môi trường · GAP 2030</div>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <div class="val">190+</div>
+          <div class="lbl">Quốc gia</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="val">60B€</div>
+          <div class="lbl">Doanh thu</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="val">3.4B</div>
+          <div class="lbl">Người dùng/ngày</div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-right">
+      <div class="cover-bg-pattern"></div>
+      <div class="cover-leaf">
+        <svg viewBox="0 0 200 200" fill="none">
+          <path d="M100 10 C60 10, 10 50, 10 100 C10 150, 60 190, 100 190 C100 190, 190 150, 190 100 C190 50, 140 10, 100 10Z" fill="white"/>
+          <path d="M100 30 L100 170 M100 100 C70 80, 40 90, 30 110 M100 100 C130 80, 160 90, 170 110 M100 70 C80 55, 55 60, 45 75 M100 70 C120 55, 145 60, 155 75 M100 130 C80 115, 55 120, 45 135 M100 130 C120 115, 145 120, 155 135" stroke="#0D3B2E" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="cover-pillars">
+        <div class="cover-pillar"><div class="p-icon">🌡</div><div class="p-lbl">Khí hậu</div></div>
+        <div class="cover-pillar"><div class="p-icon">🌿</div><div class="p-lbl">Thiên nhiên</div></div>
+        <div class="cover-pillar"><div class="p-icon">♻</div><div class="p-lbl">Nhựa</div></div>
+        <div class="cover-pillar"><div class="p-icon">🤝</div><div class="p-lbl">Sinh kế</div></div>
+      </div>
+    </div>
+    <div class="cover-bottom-bar"></div>
+  </div>
+</div>
+
+<!-- SLIDE 2: OVERVIEW -->
+<div class="slide-wrapper" id="s1">
+  <div class="slide-number">Slide 02 / 06 — Giới Thiệu Tổng Quan</div>
+  <div class="slide slide-overview">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-header">
+      <div>
+        <div class="slide-section-tag">Phần 1 — Giới Thiệu</div>
+        <div class="slide-h1">Tại sao Unilever là <em>doanh nghiệp<br>ESG tiêu biểu</em> toàn cầu?</div>
+      </div>
+      <div class="slide-logo"><span>U</span></div>
+    </div>
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="ov-icon">🌍</div>
+        <div class="ov-title">Quy mô toàn cầu</div>
+        <div class="ov-text">Hiện diện tại 190+ quốc gia với hơn 400 thương hiệu như Dove, Knorr, OMO, Lipton. Mỗi ngày 3,4 tỷ người sử dụng sản phẩm.</div>
+        <div class="ov-stat">400+ thương hiệu</div>
+      </div>
+      <div class="overview-card">
+        <div class="ov-icon">📊</div>
+        <div class="ov-title">Quy mô tài chính</div>
+        <div class="ov-text">Doanh thu hơn 60 tỷ Euro/năm, thuộc Top 5 công ty FMCG lớn nhất thế giới tính theo vốn hóa thị trường.</div>
+        <div class="ov-stat">~60 tỷ EUR/năm</div>
+      </div>
+      <div class="overview-card">
+        <div class="ov-icon">🏆</div>
+        <div class="ov-title">Vì sao tiêu biểu về ESG?</div>
+        <div class="ov-text">Nhà tiên phong tích hợp mục tiêu bền vững vào chiến lược kinh doanh cốt lõi — GAP 2030 với Net Zero 2039, SBTi được phê duyệt, thành viên RE100.</div>
+        <div class="ov-stat">Net Zero 2039</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: SOLUTIONS -->
+<div class="slide-wrapper" id="s2">
+  <div class="slide-number">Slide 03 / 06 — Các Giải Pháp Bền Vững</div>
+  <div class="slide slide-solutions">
+    <div class="sol-bg"></div>
+    <div class="sol-header">
+      <div class="slide-section-tag">Phần 2 — Giải Pháp</div>
+      <div class="slide-h1" style="color:white;">5 Giải Pháp <em>Phát Triển Bền Vững</em> Nổi Bật</div>
+    </div>
+    <div class="solutions-grid">
+      <div class="sol-card c1">
+        <div class="sol-num">01</div>
+        <div class="sol-icon-box">⚡</div>
+        <div class="sol-title">Điện Tái Tạo 100% Trong Vận Hành</div>
+        <div class="sol-kpi">85%</div>
+        <div class="sol-desc">điện tái tạo năm 2024 · RE100 · Solar 20+ quốc gia · Giảm 74% phát thải Scope 1&2 từ 2015</div>
+      </div>
+      <div class="sol-card c2">
+        <div class="sol-num">02</div>
+        <div class="sol-icon-box">🌡</div>
+        <div class="sol-title">Khử Carbon — Climate Transition Action Plan</div>
+        <div class="sol-kpi">Net Zero 2039</div>
+        <div class="sol-desc">Scope 1&2: -100% vào 2030 · Scope 3: -42% vào 2030 · SBTi phê duyệt · €150M đầu tư</div>
+      </div>
+      <div class="sol-card c3">
+        <div class="sol-num">03</div>
+        <div class="sol-icon-box">🌾</div>
+        <div class="sol-title">Nông Nghiệp Tái Sinh & Bảo Vệ Hệ Sinh Thái</div>
+        <div class="sol-kpi">1M ha 2030</div>
+        <div class="sol-desc">130.000 ha hiện tại · Không phá rừng · 100 địa điểm quản lý nước · Chuỗi cung ứng sạch</div>
+      </div>
+      <div class="sol-card c4">
+        <div class="sol-num">04</div>
+        <div class="sol-icon-box">♻</div>
+        <div class="sol-title">Chiến Lược Giảm Nhựa & Bao Bì Tuần Hoàn</div>
+        <div class="sol-kpi">-30% nhựa 2026</div>
+        <div class="sol-desc">100% bao bì tái chế 2030 · 25% nhựa tái chế 2025 · Giảm nhựa nguyên sinh vs 2019</div>
+      </div>
+      <div class="sol-card c5">
+        <div class="sol-num">05</div>
+        <div class="sol-icon-box">🤝</div>
+        <div class="sol-title">Hợp Tác Chuỗi Cung Ứng & Vận Động Chính Sách</div>
+        <div class="sol-kpi">300 nhà cung ứng</div>
+        <div class="sol-desc">44% tổng phát thải Scope 3 · Giảm 14% phát thải nông-lâm 2024 · COP tham gia</div>
+      </div>
+    </div>
+    <div class="slide-tag-fixed">Unilever · ESG Analysis · 2025</div>
+  </div>
+</div>
+
+<!-- SLIDE 4: LADDER -->
+<div class="slide-wrapper" id="s3">
+  <div class="slide-number">Slide 04 / 06 — Phân Loại 4 Bậc Thang</div>
+  <div class="slide slide-ladder">
+    <div class="slide-accent-bar"></div>
+    <div class="ladder-left">
+      <div class="slide-section-tag">Phần 3 — Đánh Giá</div>
+      <div class="slide-h1">4 Bậc Thang<br>Quản Lý <em>Môi Trường</em></div>
+      <div class="ladder-desc">Unilever đang chuyển dịch mạnh từ Bậc 3 sang Bậc 4 — nhưng vẫn còn dư âm của Bậc 2 trong vấn đề bao bì sachet.</div>
+      <div class="ladder-verdict">
+        <div class="v-label">Kết luận đánh giá</div>
+        <div class="v-text">Trọng tâm <strong style="color:var(--gold)">Bậc 4</strong> với cam kết SBTi. Bậc 2 chưa hoàn toàn xóa bỏ (53 tỷ sachets/năm). Khoảng cách thực thi đáng kể.</div>
+      </div>
+    </div>
+    <div class="ladder-right">
+      <div class="ladder-step step-4">
+        <div class="ls-num">4</div>
+        <div class="ls-content">
+          <div class="ls-title">Sản Xuất Sạch Hơn — Phòng Ngừa Từ Đầu Nguồn</div>
+          <div class="ls-body">100% điện tái tạo · Thiết kế lại bao bì · Nông nghiệp tái sinh 130K+ ha · Net Zero 2039 · Giảm Scope 3 từ gốc chuỗi cung ứng</div>
+        </div>
+        <div class="ls-badge">Trọng tâm chính ✦</div>
+      </div>
+      <div class="ladder-step step-3">
+        <div class="ls-num">3</div>
+        <div class="ls-content">
+          <div class="ls-title">Xử Lý Cuối Đường Ống (End-of-Pipe)</div>
+          <div class="ls-body">CreaSolv® tái chế nhựa · Thu gom bao bì sau sử dụng · ISO 14001 xử lý nước thải & khí thải tại nhà máy</div>
+        </div>
+        <div class="ls-badge">Đang áp dụng</div>
+      </div>
+      <div class="ladder-step step-2">
+        <div class="ls-num">2</div>
+        <div class="ls-content">
+          <div class="ls-title">Pha Loãng & Phân Tán — Vẫn Còn Tồn Tại</div>
+          <div class="ls-body">53 tỷ túi sachet/năm tại thị trường đang phát triển · Không thể tái chế · Kết thúc trong môi trường tự nhiên</div>
+        </div>
+        <div class="ls-badge">Mâu thuẫn ⚠</div>
+      </div>
+      <div class="ladder-step step-1">
+        <div class="ls-num">1</div>
+        <div class="ls-content">
+          <div class="ls-title">Thụ Động / Không Quan Tâm — Đã Vượt Qua</div>
+          <div class="ls-body">Kodaikanal 2001 (thủy ngân) · Phá rừng dầu cọ trước 2010 · Hiện đã vượt qua giai đoạn này</div>
+        </div>
+        <div class="ls-badge">Lịch sử</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: CONTRADICTION (CRITICAL ANALYSIS) -->
+<div class="slide-wrapper" id="s4">
+  <div class="slide-number">Slide 05 / 06 — Phân Tích Phê Phán</div>
+  <div class="slide slide-tension">
+    <div class="slide-accent-bar"></div>
+    <div class="slide-header">
+      <div>
+        <div class="slide-section-tag">Phần 3 — Phân Tích Phê Phán</div>
+        <div class="slide-h1">Cam Kết vs. <em style="color:var(--coral)">Thực Tế:</em><br>Khoảng Cách Của Unilever</div>
+      </div>
+      <div class="slide-logo"><span>U</span></div>
+    </div>
+    <div class="tension-grid">
+      <div class="tension-col">
+        <div class="tension-col-title t-positive">✦ Điểm Mạnh Đáng Ghi Nhận</div>
+        <div class="tension-item ti-green">
+          <div class="ti-label">Năng lượng tái tạo</div>
+          <div class="ti-text">85% điện tái tạo toàn vận hành — giảm 74% Scope 1&2 kể từ 2015</div>
+          <div class="ti-stat">-74% phát thải</div>
+        </div>
+        <div class="tension-item ti-green">
+          <div class="ti-label">Khoa học & Cam kết</div>
+          <div class="ti-text">SBTi phê duyệt, RE100, GAP 2030 — chiến lược có nền tảng khoa học rõ ràng</div>
+          <div class="ti-stat">Net Zero 2039</div>
+        </div>
+        <div class="tension-item ti-green">
+          <div class="ti-label">Nông nghiệp tái sinh</div>
+          <div class="ti-text">130.000 ha đang triển khai → mục tiêu 1 triệu ha vào 2030</div>
+          <div class="ti-stat">130K ha hiện tại</div>
+        </div>
+      </div>
+      <div class="tension-col">
+        <div class="tension-col-title t-negative">⚠ Mâu Thuẫn Cần Phân Tích</div>
+        <div class="tension-item ti-red">
+          <div class="ti-label">Sachet Crisis</div>
+          <div class="ti-text">Ban lãnh đạo gọi sachet là "tội ác" — nhưng vẫn sản xuất số lượng ngày càng tăng</div>
+          <div class="ti-stat">53 tỷ sachets/năm</div>
+        </div>
+        <div class="tension-item ti-red">
+          <div class="ti-label">Lùi mục tiêu nhựa</div>
+          <div class="ti-text">Mục tiêu "100% bao bì tái chế vào 2025" bị lùi sang 2030-2035 mà không có giải thích đủ thuyết phục</div>
+          <div class="ti-stat">Lùi 5–10 năm</div>
+        </div>
+        <div class="tension-item ti-red">
+          <div class="ti-label">Cảnh báo Greenwashing</div>
+          <div class="ti-text">CMA (UK) & ASA điều tra các tuyên bố "bền vững" của Unilever về thiếu bằng chứng cụ thể (2022–2023)</div>
+          <div class="ti-stat">Bị điều tra</div>
+        </div>
+      </div>
+    </div>
+    <div class="tension-bottom">
+      <div class="tb-icon">💡</div>
+      <div class="tb-text"><strong>Luận điểm học thuật:</strong> Khoảng cách giữa cam kết và hành động của Unilever minh hoạ rõ ranh giới giữa "Corporate Sustainability Strategy" và "Greenwashing" — áp lực lợi nhuận ngắn hạn vẫn có thể cản trở chuyển dịch bền vững thực sự.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: CONCLUSION -->
+<div class="slide-wrapper" id="s5">
+  <div class="slide-number">Slide 06 / 06 — Kết Luận</div>
+  <div class="slide slide-conclusion">
+    <div class="conc-bg"></div>
+    <div class="conc-left">
+      <div class="slide-section-tag">Kết Luận Tổng Hợp</div>
+      <div class="slide-h1" style="color:white;">Unilever: Doanh Nghiệp<br>Đang Trong <span style="color:var(--green-pale)">Quá Trình</span><br>Chuyển Đổi</div>
+      <div class="conc-quote">
+        <div class="cq-text">"Lợi nhuận kinh doanh, tiến bộ môi trường và phúc lợi cộng đồng có thể và phải song hành cùng nhau."</div>
+        <div class="cq-source">— Tầm nhìn chiến lược Unilever</div>
+      </div>
+    </div>
+    <div class="conc-right">
+      <div class="conc-metric cm-g">
+        <div class="cm-val">Bậc 4</div>
+        <div class="cm-label">Trọng tâm chiến lược hiện tại — sản xuất sạch hơn, phòng ngừa từ đầu nguồn qua CTAP & RE100</div>
+      </div>
+      <div class="conc-metric cm-a">
+        <div class="cm-val">2039</div>
+        <div class="cm-label">Mục tiêu Net Zero toàn chuỗi giá trị — được SBTi phê duyệt và cam kết công khai</div>
+      </div>
+      <div class="conc-metric cm-b">
+        <div class="cm-val">-74%</div>
+        <div class="cm-label">Giảm phát thải Scope 1&2 kể từ 2015 — minh chứng thực tế của nỗ lực khử carbon vận hành</div>
+      </div>
+      <div class="conc-metric cm-r">
+        <div class="cm-val">53B</div>
+        <div class="cm-label">Sachets/năm — mâu thuẫn chiến lược lớn nhất, chứng minh khoảng cách thực thi vẫn còn đáng kể</div>
+      </div>
+    </div>
+    <div class="conc-footer"></div>
+    <div class="slide-tag-fixed">Unilever · ESG Analysis · 2025</div>
+  </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide-wrapper');
+  const btns = document.querySelectorAll('.nav button');
+
+  function goSlide(i) {
+    slides[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    btns.forEach((b, idx) => b.classList.toggle('active', idx === i));
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.intersectionRatio > 0.5) {
+        const idx = Array.from(slides).indexOf(e.target);
+        btns.forEach((b, i) => b.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

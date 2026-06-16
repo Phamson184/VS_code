@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheat Sheet Giải Tích – Casio FX-880BTG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 11px;
+    background: #fff;
+    color: #111;
+    padding: 10mm;
+  }
+
+  @media print {
+    body { padding: 6mm; font-size: 10.5px; }
+    .page-break { page-break-before: always; }
+    .no-break { page-break-inside: avoid; }
+  }
+
+  h1 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border-bottom: 2.5px solid #111;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .box {
+    border: 1.5px solid #222;
+    padding: 7px 9px;
+  }
+
+  .box h2 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #111;
+    color: #fff;
+    margin: -7px -9px 6px -9px;
+    padding: 3px 9px;
+  }
+
+  .box h3 {
+    font-size: 10.5px;
+    font-weight: 700;
+    margin: 6px 0 3px 0;
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 1px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-gray {
+    background: #555;
+  }
+
+  .steps {
+    margin: 3px 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .steps li {
+    padding: 1px 0 1px 14px;
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .steps li::before {
+    content: attr(data-n)".";
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+  }
+
+  .rule {
+    background: #f3f3f3;
+    border-left: 3px solid #111;
+    padding: 3px 7px;
+    margin: 4px 0;
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+
+  .rule.warn {
+    border-color: #c00;
+    background: #fff0f0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+    margin: 4px 0;
+  }
+
+  th {
+    background: #333;
+    color: #fff;
+    padding: 2px 5px;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  td {
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  tr:nth-child(even) td { background: #f8f8f8; }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+  }
+
+  .sep {
+    border: none;
+    border-top: 1.5px solid #111;
+    margin: 10px 0;
+  }
+
+  .tag {
+    display: inline-block;
+    border: 1px solid #111;
+    font-size: 9px;
+    padding: 0 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 3px;
+  }
+
+  .tag.casio { background: #111; color: #fff; }
+  .tag.logic { background: #fff; color: #111; }
+
+  p { line-height: 1.5; margin: 2px 0; }
+</style>
+</head>
+<body>
+
+<h1>Cheat Sheet Giải Tích · Casio FX-880BTG · Trắc nghiệm</h1>
+
+<!-- ===== PHẦN 1: CASIO TOOLKIT ===== -->
+<div class="grid" style="margin-bottom:10px">
+
+  <div class="box no-break">
+    <h2>🖩 Casio: 4 thao tác cốt lõi</h2>
+
+    <h3>① Tích phân xác định <span class="tag casio">bấm được</span></h3>
+    <ul class="steps">
+      <li data-n="1">Vào <span class="btn">Calculate</span></li>
+      <li data-n="2">Nhấn <span class="btn">CATALOG</span> → <span class="btn-gray btn">Func Analysis</span> → <span class="btn-gray btn">Integration ∫</span> → OK</li>
+      <li data-n="3">Nhập: <span class="mono">∫( hàm số, cận dưới, cận trên )</span></li>
+      <li data-n="4">Nhấn <span class="btn">EXE</span> → ra số</li>
+    </ul>
+    <div class="rule">Ví dụ: <span class="mono">∫(1/(3x+1)², 1, 2)</span> → ra 1/28 ✓<br>
+    Thể tích xoay Ox: nhập <span class="mono">π × ∫([f(x)]², a, b)</span></div>
+
+    <h3>② Đạo hàm tại 1 điểm <span class="tag casio">bấm được</span></h3>
+    <ul class="steps">
+      <li data-n="1"><span class="btn">CATALOG</span> → <span class="btn-gray btn">Func Analysis</span> → <span class="btn-gray btn">Derivative d/dx</span> → OK</li>
+      <li data-n="2">Nhập: <span class="mono">d/dx( hàm số, điểm x₀ )</span></li>
+      <li data-n="3"><span class="btn">EXE</span></li>
+    </ul>
+    <div class="rule">Đạo hàm riêng f_x tại (x₀,y₀): thay số y₀ vào hàm trước → còn lại hàm 1 biến → bấm d/dx bình thường</div>
+
+    <h3>③ Hệ phương trình <span class="tag casio">bấm được</span></h3>
+    <ul class="steps">
+      <li data-n="1"><span class="btn">HOME</span> → <span class="btn-gray btn">Equation</span> → OK</li>
+      <li data-n="2">Chọn <span class="btn-gray btn">Simultaneous</span> → số ẩn (2 hoặc 3) → OK</li>
+      <li data-n="3">Nhập hệ số từng phương trình → <span class="btn">EXE</span></li>
+    </ul>
+    <div class="rule">Dùng cho: tìm mô hình y=mx+b, tìm điểm tới hạn hàm 2 biến khi hệ tuyến tính</div>
+
+    <h3>④ Solver – dò nghiệm 1 ẩn <span class="tag casio">bấm được</span></h3>
+    <ul class="steps">
+      <li data-n="1"><span class="btn">HOME</span> → <span class="btn-gray btn">Equation</span> → <span class="btn-gray btn">Solver</span> → OK</li>
+      <li data-n="2">Nhập phương trình (dạng f(x) = 0) → <span class="btn">EXE</span></li>
+      <li data-n="3">Nhập giá trị ban đầu gần nghiệm → chọn Execute → <span class="btn">EXE</span></li>
+    </ul>
+    <div class="rule warn">⚠ Solver chỉ ra 1 nghiệm, phụ thuộc vào giá trị ban đầu. PT có nhiều nghiệm → thử giá trị ban đầu khác nhau.</div>
+  </div>
+
+  <div class="box no-break">
+    <h2>🎯 Kỹ thuật dò đáp án trắc nghiệm</h2>
+
+    <h3>Dạng "tính giá trị / tìm kết quả" → thay số</h3>
+    <div class="rule">Thay x = 1 hoặc x = 2 vào đề bài và 4 đáp án. Đáp án nào cho số trùng khớp → chọn.</div>
+
+    <h3>Dạng "xác định nguyên hàm" (biết 4 đáp án)</h3>
+    <ul class="steps">
+      <li data-n="1">Tính <span class="mono">∫( hàm đề, 0, 1 )</span> → ra số K</li>
+      <li data-n="2">Thay x=1 vào từng đáp án, trừ giá trị tại x=0</li>
+      <li data-n="3">Đáp án nào bằng K → đúng</li>
+    </ul>
+
+    <h3>Dạng PT vi phân "nghiệm nào đúng"</h3>
+    <div class="rule">Thay đáp án vào PT để kiểm tra: tính y', y'' từ đáp án → thế vào PT → bằng vế phải thì đúng.<br>
+    Hoặc dùng <span class="mono">d/dx</span> tính y' của từng đáp án rồi kiểm tra.</div>
+
+    <h3>Dạng tìm cực trị / điểm tới hạn</h3>
+    <ul class="steps">
+      <li data-n="1">Tính <span class="mono">d/dx(f, x)</span> → đặt = 0</li>
+      <li data-n="2">Dùng Solver dò x → được điểm tới hạn</li>
+      <li data-n="3">Thay vào f để lấy giá trị cực trị</li>
+    </ul>
+
+    <h3>Dạng mô hình tuyến tính y = mx + b</h3>
+    <div class="rule">2 điểm dữ liệu → lập 2 PT → vào <strong>Equation → Simultaneous → 2 ẩn</strong> → ra m, b ngay.</div>
+
+    <h3>Dạng hàm mũ aᵗ ≤ k</h3>
+    <div class="rule">Nhập thẳng vào Solver: <span class="mono">a^x - k = 0</span> → ra t. Không cần lấy logarit tay.</div>
+  </div>
+
+</div>
+
+<hr class="sep">
+
+<!-- ===== PHẦN 2: SUY LUẬN ===== -->
+<div class="grid" style="margin-bottom:10px">
+
+  <div class="box no-break">
+    <h2>📊 Chuỗi số – Nhận dạng nhanh <span class="tag logic">suy luận</span></h2>
+
+    <h3>Test đầu tiên (luôn làm trước)</h3>
+    <div class="rule warn">Nếu lim(aₙ) ≠ 0 → Phân kỳ ngay. Không cần test gì thêm.</div>
+
+    <h3>Nhận dạng theo hình dạng aₙ</h3>
+    <table>
+      <tr><th>Nhìn thấy</th><th>Dùng test</th><th>Kết luận</th></tr>
+      <tr><td><span class="mono">arⁿ</span></td><td>Geometric</td><td>|r|&lt;1 → hội tụ, S=a/(1-r)</td></tr>
+      <tr><td><span class="mono">1/nᵖ</span></td><td>p-series</td><td>p&gt;1 → hội tụ</td></tr>
+      <tr><td>Có <span class="mono">n!</span> hoặc <span class="mono">aⁿ</span></td><td>Ratio Test</td><td>L=lim|aₙ₊₁/aₙ|, L&lt;1 → HT</td></tr>
+      <tr><td><span class="mono">(-1)ⁿ bₙ</span></td><td>Alternating</td><td>bₙ giảm → 0 thì hội tụ</td></tr>
+    </table>
+
+    <h3>Ratio Test – công thức</h3>
+    <div class="rule"><span class="mono">L = lim|aₙ₊₁/aₙ|</span><br>
+    L &lt; 1 → Hội tụ tuyệt đối &nbsp;|&nbsp; L &gt; 1 → Phân kỳ<br>
+    <strong>L = 1 → Không kết luận được!</strong></div>
+  </div>
+
+  <div class="box no-break">
+    <h2>∫ Tích phân suy rộng <span class="tag logic">suy luận</span></h2>
+
+    <div class="rule warn" style="font-size:11px;font-weight:600;text-align:center;padding:5px">
+      ⚠ LOẠI 1 và LOẠI 2 NGƯỢC NHAU – bẫy hay gặp nhất!
+    </div>
+
+    <h3>Loại 1 – Cận vô cực: ∫₁^∞ 1/xᵖ dx</h3>
+    <table>
+      <tr><th>Điều kiện</th><th>Kết quả</th></tr>
+      <tr><td>p &gt; 1</td><td>✅ Hội tụ</td></tr>
+      <tr><td>p ≤ 1</td><td>❌ Phân kỳ (kể cả p=1, chuỗi điều hòa)</td></tr>
+    </table>
+
+    <h3>Loại 2 – Hàm gián đoạn tại cận: ∫ₐᵇ 1/(x-a)ᵖ dx</h3>
+    <table>
+      <tr><th>Điều kiện</th><th>Kết quả</th></tr>
+      <tr><td>p &lt; 1</td><td>✅ Hội tụ</td></tr>
+      <tr><td>p ≥ 1</td><td>❌ Phân kỳ</td></tr>
+    </table>
+
+    <h3>Cách nhận dạng loại trong đề</h3>
+    <div class="rule">Nhìn cận: có ∞ → Loại 1. Cận hữu hạn nhưng mẫu = 0 tại 1 điểm → Loại 2.<br>
+    Tìm p: viết mẫu dạng (x-a)ᵖ → đọc p → áp quy tắc.</div>
+  </div>
+
+</div>
+
+<div class="grid" style="margin-bottom:10px">
+
+  <div class="box no-break">
+    <h2>🗺 Đổi thứ tự tích phân kép <span class="tag logic">suy luận</span></h2>
+
+    <h3>Quy trình 3 bước – KHÔNG thể bấm máy</h3>
+    <ul class="steps">
+      <li data-n="1"><strong>Đọc cận</strong> → viết bất đẳng thức xác định miền D</li>
+      <li data-n="2"><strong>Vẽ phác miền D</strong> (chỉ cần phác thảo trên giấy nháp)</li>
+      <li data-n="3"><strong>Đọc lại miền</strong> theo thứ tự tích phân ngược</li>
+    </ul>
+
+    <h3>Ví dụ mẫu</h3>
+    <div class="rule">
+      Cho: <span class="mono">∫₀¹ ∫ₓ¹ f(x,y) dy dx</span><br>
+      Miền D: 0≤x≤1, x≤y≤1 → vẽ ra tam giác<br>
+      Đổi: x chạy 0→y, y chạy 0→1<br>
+      → <span class="mono">∫₀¹ ∫₀ʸ f(x,y) dx dy</span>
+    </div>
+
+    <h3>Miền hình chữ nhật</h3>
+    <div class="rule">Theo Fubini: chỉ hoán đổi cận, giữ nguyên hàm.<br>
+    <span class="mono">∫ₐᵇ ∫꜀ᵈ f dy dx = ∫꜀ᵈ ∫ₐᵇ f dx dy</span></div>
+  </div>
+
+  <div class="box no-break">
+    <h2>〰 Tích phân đường <span class="tag logic">suy luận</span></h2>
+
+    <h3>Nhận loại – nhìn vào ký hiệu đề</h3>
+    <table>
+      <tr><th>Đề có</th><th>Loại</th><th>Công thức</th></tr>
+      <tr><td><span class="mono">ds</span></td><td>Loại 1</td><td>∫f·ds = ∫f(x(t),y(t))·√(x'²+y'²) dt</td></tr>
+      <tr><td><span class="mono">dx, dy</span> riêng</td><td>Loại 2</td><td>∫P dx+Q dy = ∫[Px'+Qy'] dt</td></tr>
+    </table>
+
+    <h3>Khi nào dùng Green thay Loại 2</h3>
+    <div class="rule warn">Đường cong <strong>khép kín</strong> + miền <strong>phẳng</strong> → dùng Green:<br>
+    <span class="mono">∮C P dx+Q dy = ∬D (∂Q/∂x - ∂P/∂y) dA</span><br>
+    Bước 1: Tính ∂Q/∂x và ∂P/∂y<br>
+    Bước 2: Tính hiệu → tích phân trên miền D</div>
+
+    <h3>Tham số hóa đường thẳng A→B</h3>
+    <div class="rule">Từ A=(x₁,y₁) đến B=(x₂,y₂):<br>
+    <span class="mono">x = x₁ + t(x₂-x₁), y = y₁ + t(y₂-y₁), t∈[0,1]</span><br>
+    dx = (x₂-x₁)dt, dy = (y₂-y₁)dt</div>
+  </div>
+
+</div>
+
+<div class="grid">
+
+  <div class="box no-break">
+    <h2>📐 Phương trình vi phân <span class="tag logic">suy luận</span></h2>
+
+    <h3>PT cấp 2 thuần nhất: ay''+by'+cy = 0</h3>
+    <div class="rule">Giải PT đặc trưng: <span class="mono">ar²+br+c=0</span> (bấm máy Equation)</div>
+    <table>
+      <tr><th>Nghiệm r</th><th>Dạng nghiệm tổng quát y</th></tr>
+      <tr><td>r₁ ≠ r₂ (thực)</td><td><span class="mono">c₁eʳ¹ˣ + c₂eʳ²ˣ</span></td></tr>
+      <tr><td>r₁ = r₂ = r (kép)</td><td><span class="mono">c₁eʳˣ + c₂·x·eʳˣ</span></td></tr>
+      <tr><td>r = α ± βi (phức)</td><td><span class="mono">eᵅˣ(c₁cosβx + c₂sinβx)</span></td></tr>
+    </table>
+
+    <h3>PT cấp 1 tuyến tính: y' + P(x)y = Q(x)</h3>
+    <ul class="steps">
+      <li data-n="1">Tính nhân tử tích phân: <span class="mono">I = e^(∫P dx)</span></li>
+      <li data-n="2">Nhân 2 vế: <span class="mono">(I·y)' = I·Q</span></li>
+      <li data-n="3">Tích phân 2 vế → giải ra y</li>
+      <li data-n="4">Thay điều kiện ban đầu y(x₀)=y₀ → tìm C</li>
+    </ul>
+
+    <h3>PT tách biến: dy/dx = f(x)·g(y)</h3>
+    <div class="rule"><span class="mono">dy/g(y) = f(x)dx</span> → tích phân 2 vế độc lập → ra nghiệm</div>
+  </div>
+
+  <div class="box no-break">
+    <h2>🏔 Cực trị hàm 2 biến <span class="tag casio">casio hỗ trợ</span></h2>
+
+    <h3>Quy trình 4 bước</h3>
+    <ul class="steps">
+      <li data-n="1">Giải hệ <span class="mono">fₓ=0, f_y=0</span> → điểm tới hạn (a,b) &nbsp;<span class="tag casio">Equation</span></li>
+      <li data-n="2">Tính D = fₓₓ·f_yy − (f_xy)² tại (a,b) &nbsp;<span class="tag casio">d/dx</span></li>
+      <li data-n="3">Tra bảng bên dưới</li>
+      <li data-n="4">Tính f(a,b) nếu đề hỏi giá trị cực trị</li>
+    </ul>
+
+    <table>
+      <tr><th>D</th><th>fₓₓ</th><th>Kết luận</th></tr>
+      <tr><td>D &gt; 0</td><td>&gt; 0</td><td>✅ Cực tiểu địa phương</td></tr>
+      <tr><td>D &gt; 0</td><td>&lt; 0</td><td>✅ Cực đại địa phương</td></tr>
+      <tr><td>D &lt; 0</td><td>—</td><td>Điểm yên ngựa (saddle)</td></tr>
+      <tr><td>D = 0</td><td>—</td><td>❓ Không kết luận được</td></tr>
+    </table>
+
+    <h3>Điều kiện liên tục – tìm tham số m</h3>
+    <div class="rule">Hàm liên tục tại x=a khi: lim trái = lim phải = f(a)<br>
+    → Tính lim trái và lim phải → cho bằng nhau → giải ra m<br>
+    <span class="tag casio">Bấm máy:</span> thay số vào từng nhánh hàm để kiểm tra</div>
+  </div>
+
+</div>
+
+<div style="margin-top:8px;padding:5px 8px;border:1px solid #999;font-size:9.5px;color:#444;text-align:center">
+  Tài liệu ôn thi · Casio FX-880BTG · In 1 trang A4 – Scale to fit · In đậm / không màu vẫn đọc được
+</div>
+
+</body>
+</html>
