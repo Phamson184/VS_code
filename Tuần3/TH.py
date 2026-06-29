@@ -111,8 +111,4 @@ if __name__ == '__main__':
             else:
                 print("Lựa chọn không hợp lệ!")
     except KeyboardInterrupt:
-<<<<<<< HEAD
         pass
-=======
-        pass
->>>>>>> 54b73f1f0efd8c94226d82a1874594e5ef3789c8

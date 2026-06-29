@@ -1,34 +1,58 @@
-def xep_lich_co_ten(danh_sach_cv, so_nhan_vien):
-    cv_da_sap_xep = sorted(danh_sach_cv, key=lambda x: x[1], reverse=True)
-    bang_phan_cong = [[] for _ in range(so_nhan_vien)]
-    tong_thoi_gian = [0] * so_nhan_vien
+from simpleai.search import CspProblem, backtrack, \
+    MOST_CONSTRAINED_VARIABLE, HIGHEST_DEGREE_VARIABLE, LEAST_CONSTRAINING_VALUE
+
+# --- CÁC HÀM LOGIC RÀNG BUỘC ---
+def rang_buoc_bang_nhau(cac_bien, cac_gia_tri): 
+    return cac_gia_tri[0] == cac_gia_tri[1]
     
-    for ten_cv, thoi_gian in cv_da_sap_xep:
-        vi_tri_nv = tong_thoi_gian.index(min(tong_thoi_gian))
-        bang_phan_cong[vi_tri_nv].append(f"{ten_cv} ({thoi_gian} tuần)")
-        tong_thoi_gian[vi_tri_nv] += thoi_gian
-        
-    return bang_phan_cong, tong_thoi_gian
+def rang_buoc_khac_nhau(cac_bien, cac_gia_tri): 
+    return cac_gia_tri[0] != cac_gia_tri[1]
+    
+def rang_buoc_nho_hon(cac_bien, cac_gia_tri):   
+    return cac_gia_tri[0] < cac_gia_tri[1]
+
+def khoi_tao_do_thi_5_bien():
+    tap_bien = ['A', 'B', 'C', 'D', 'E']
+    mien_gia_tri = {
+        'A': [1, 2, 3, 4], 'B': [1, 2, 4], 'C': [1, 3, 4],
+        'D': [1, 2, 3, 4], 'E': [1, 2, 3, 4]
+    }
+    tap_rang_buoc = [
+        (('A', 'B'), rang_buoc_khac_nhau), (('A', 'D'), rang_buoc_bang_nhau),
+        (('E', 'A'), rang_buoc_nho_hon),   (('B', 'C'), rang_buoc_khac_nhau),
+        (('B', 'D'), rang_buoc_khac_nhau), (('E', 'B'), rang_buoc_nho_hon),
+        (('C', 'D'), rang_buoc_nho_hon),   (('E', 'C'), rang_buoc_nho_hon),
+        (('E', 'D'), rang_buoc_nho_hon)    # Ràng buộc bổ sung để đồ thị đúng logic
+    ]
+    return CspProblem(tap_bien, mien_gia_tri, tap_rang_buoc)
+
+# --- HÀM TRÌNH BÀY OUTPUT THEO STYLE CỦA BẠN ---
+def in_ket_qua_csp(tieu_de, ket_qua):
+    if ket_qua:
+        # Nối kết quả thành chuỗi dạng A: 4 | B: 2 | C: 3...
+        chuoi_kq = " | ".join(f"{bien}: {ket_qua[bien]}" for bien in sorted(ket_qua.keys()))
+        print(f"{tieu_de:<30} => {chuoi_kq}")
+    else:
+        print(f"{tieu_de:<30} => Không tìm thấy giải pháp")
 
 if __name__ == "__main__":
-    danh_sach_du_an = [
-    ("A- Xây dựng bộ phận bên trong", 2),
-    ("B- Sửa chữa mái và sàn",        3),
-    ("C- Xây ống gom khói",           2),
-    ("D- Đổ bê tông và xây khung",    4),
-    ("E- Xây cửa lò chịu nhiệt",      4),
-    ("F- Lắp đặt hệ thống kiểm soát", 3),
-    ("G- Lắp đặt thiết bị lọc khí",   5),
-    ("H- Kiểm tra và thử nghiệm",     2),
-]
-
-    so_nhan_vien = 4
-
-    print("\nKẾT QUẢ XẾP LỊCH BÀI 5 (4 NHÂN VIÊN):")
-    kq_phan_cong, kq_thoi_gian = xep_lich_co_ten(danh_sach_du_an, so_nhan_vien)
-
-    for i in range(so_nhan_vien):
-        ds_cv = ", ".join(kq_phan_cong[i])
-        print(f"Nhân viên {i+1} | Tổng tuần: {kq_thoi_gian[i]:<2} | Gồm: {ds_cv}")
-
-    print(f"\n=> Tổng thời gian của dự án: {max(kq_thoi_gian)} tuần")
+    bai_toan = khoi_tao_do_thi_5_bien()
+    
+    print("\n--- BÀI TOÁN MẪU 2: KẾT QUẢ TÌM KIẾM CSP ĐỒ THỊ 5 BIẾN ---")
+    
+    # Duyệt cơ bản (Normal)
+    kq_normal = backtrack(bai_toan)
+    in_ket_qua_csp("1. Duyệt cơ bản (Normal)", kq_normal)
+    
+    # Heuristic: MOST_CONSTRAINED_VARIABLE
+    kq_mcv = backtrack(bai_toan, variable_heuristic=MOST_CONSTRAINED_VARIABLE)
+    in_ket_qua_csp("2. Most Constrained Variable", kq_mcv)
+    
+    # Heuristic: HIGHEST_DEGREE_VARIABLE
+    kq_hdv = backtrack(bai_toan, variable_heuristic=HIGHEST_DEGREE_VARIABLE)
+    in_ket_qua_csp("3. Highest Degree Variable", kq_hdv)
+    
+    # Heuristic: LEAST_CONSTRAINING_VALUE
+    kq_lcv = backtrack(bai_toan, value_heuristic=LEAST_CONSTRAINING_VALUE)
+    in_ket_qua_csp("4. Least Constraining Value", kq_lcv)
+    print("-" * 65)
