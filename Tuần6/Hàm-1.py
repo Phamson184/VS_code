@@ -125,7 +125,7 @@ Noidung = {
     '2': {
         'ten': 'BÀI 2: HÀM BĂM CHUỖI (TỔNG MÃ KÝ TỰ)',
         'du_lieu': {'strings': ['abc', 'cba', 'bca', 'xyz'], 'm': 100},
-        'mong_doi': {'abc': 94, 'cba': 94, 'bca': 94, 'xyz': 58}, # (97+98+99) % 100 = 294 % 100 = 94
+        'mong_doi': {'abc': 94, 'cba': 94, 'bca': 94, 'xyz': 63},
         'ham': lambda d: bai_2_ascii_hash(d),
         'format': lambda d, kq: (
             f"Kết quả băm:\n" + "\n".join([f"  '{k}' -> {v}" for k, v in kq.items()]) +
