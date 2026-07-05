@@ -199,7 +199,7 @@ Noidung = {
     '10': {
         'ten': 'BÀI 10: PHƯƠNG PHÁP NHÂN (MULTIPLICATION METHOD)',
         'du_lieu': {'keys': [12345, 67890], 'm': 1000, 'A': 0.618033},
-        'mong_doi': [617, 397],
+        'mong_doi': [617, 260],
         'ham': lambda d: bai_10_multiplication(d),
         'format': lambda d, kq: f"Khóa: {d['keys']} | m={d['m']} | A≈{d['A']}\nIndex thu được: {kq}"
     },
