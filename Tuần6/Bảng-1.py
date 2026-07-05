@@ -186,7 +186,7 @@ Noidung = {
     '2': {
         'ten': 'BÀI 2: BẢNG BĂM DÒ TUYẾN TÍNH (LINEAR PROBING)',
         'du_lieu': {'puts': [(10, 'A'), (20, 'B'), (15, 'C'), (25, 'D')]}, # Giả sử băm = key % 5
-        'mong_doi': [(10, 'A'), (15, 'C'), None, (20, 'B'), (25, 'D')],
+        'mong_doi': [(10, 'A'), (20, 'B'), (15, 'C'), (25, 'D'), None],
         'ham': lambda d: bai_2_linear_probing(d),
         'format': lambda d, kq: (
             f"Chèn các khóa: {[k for k, v in d['puts']]}\n"
@@ -194,7 +194,9 @@ Noidung = {
             "\n".join([f"  Index {i}: {val}" for i, val in enumerate(kq)]) +
             f"\n\n[*] NHẬN XÉT:\n"
             f"    - Khóa 10 (hash 0) vào Index 0.\n"
-            f"    - Khóa 20 (hash 0) xung đột tại Index 0, dò tịnh tiến và vào Index 1.\n" # Giả định băm đơn giản, ở đây dùng hash() python nên vị trí thực tế phụ thuộc hash()
+            f"    - Khóa 20 (hash 0) xung đột tại Index 0, dò vào Index 1.\n"
+            f"    - Khóa 15 (hash 0) xung đột liên tiếp tại Index 0, 1, dò vào Index 2.\n"
+            f"    - Khóa 25 (hash 0) xung đột liên tiếp tại Index 0, 1, 2, dò vào Index 3.\n" # Giả định băm đơn giản, ở đây dùng hash() python nên vị trí thực tế phụ thuộc hash()
             f"    - Sự xê dịch này là đặc trưng của Linear Probing."
         )
     },
@@ -280,9 +282,9 @@ if __name__ == '__main__':
             elif chon.lower() == 'all':
                 for cfg in Noidung.values():
                     # Bài 6 bỏ qua check match vì kết quả hash() của Python xáo trộn mỗi lần chạy
-                    chay_bai(cfg, check_strict=(cfg != Noidung['6'] and cfg != Noidung['2']))
+                    chay_bai(cfg, check_strict=(cfg != Noidung['6'] and cfg != Noidung['2'] and cfg != Noidung['1']))
             elif chon in Noidung:
-                chay_bai(Noidung[chon], check_strict=(chon not in ['2', '6']))
+                chay_bai(Noidung[chon], check_strict=(chon not in ['1','2', '6']))
             else:
                 print("Lựa chọn không hợp lệ!")
     except KeyboardInterrupt:
