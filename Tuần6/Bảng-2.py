@@ -256,6 +256,8 @@ Noidung = {
             f"    - K(10) -> h1=3. Chèn vào Index 3.\n"
             f"    - K(17) -> h1=3 (Đụng độ!). Tính h2(17) = 5 - 2 = 3. Bước nhảy = 3.\n"
             f"      Thử Index (3+3)%7 = 6. Chèn vào Index 6.\n"
+            f"    - K(24) -> h1=3 (Đụng độ!). Tính h2(24) = 5 - 4 = 1. Bước nhảy = 1.\n"
+            f"      Thử Index (3+1)%7 = 4. Chèn vào Index 4.\n"
             f"    - Băm kép giúp giảm thiểu Clustering (gom cụm) cực kỳ hiệu quả."
         )
     },
